@@ -1,4 +1,4 @@
-# SCP_CB_C
+# SCP_CB_CPP
 A clone of the famous SCP Containment Breach game, but rewritten in C++ for better readability
 
 
