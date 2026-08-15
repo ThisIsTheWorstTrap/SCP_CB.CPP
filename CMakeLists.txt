@@ -10,14 +10,18 @@ find_package(raylib REQUIRED)
 
 add_executable(${PROJECT_NAME}
     main.cpp
+    engine/renderer/Renderer.cpp
+    engine/renderer/RaylibRenderer.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
     PRIVATE
-        interface3d
+        ${CMAKE_SOURCE_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         raylib
 )
+
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic)
