@@ -19,3 +19,33 @@ Coordinates Coordinates::operator+(const Coordinates& other) const
 {
     return Coordinates(x+other.x, y+other.y, z+other.z);
 }
+
+Coordinates Transform::get_position() const
+{
+    return position;
+}
+
+Coordinates Transform::get_rotation() const
+{
+    return rotation;
+}
+
+float Transform::get_scale() const
+{
+    return scale;
+}
+
+void Transform::set_position(Coordinates new_pos)
+{
+    position = new_pos;
+}
+
+void Transform::set_rotation(Coordinates new_rot)
+{
+    rotation = new_rot;
+}
+
+void Transform::set_scale(float new_scale) 
+{
+    scale = new_scale;
+}
