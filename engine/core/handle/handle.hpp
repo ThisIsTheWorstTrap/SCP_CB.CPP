@@ -19,7 +19,7 @@ class ModelHandle : public Handle
 
 
     private:
-        std::int32_t id;
+        std::int32_t id = -1;
 };
 
 class TextureHandle : public Handle
@@ -31,7 +31,7 @@ class TextureHandle : public Handle
 
 
     private:
-        std::int32_t id;
+        std::int32_t id = -1;
 };
 
 class SoundHandle : public Handle
@@ -43,7 +43,7 @@ class SoundHandle : public Handle
 
 
     private:
-        std::int32_t id;
+        std::int32_t id = -1;
 };
 
 #endif
