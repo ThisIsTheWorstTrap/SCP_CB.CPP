@@ -1,5 +1,6 @@
 #include "math.hpp"
 
+// Coordinates methods
 float Coordinates::get_x() const 
 {
     return x;
@@ -20,6 +21,8 @@ Coordinates Coordinates::operator+(const Coordinates& other) const
     return Coordinates(x+other.x, y+other.y, z+other.z);
 }
 
+
+// Transform methods
 Coordinates Transform::get_position() const
 {
     return position;
