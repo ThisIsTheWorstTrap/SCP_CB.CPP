@@ -1,9 +1,13 @@
 #ifndef COLOR_HPP
 #define COLOR_HPP
 
-typedef struct 
+namespace Engine
 {
-    unsigned char r, g, b, a; 
-} Color;
 
+    typedef struct 
+    {
+        unsigned char r, g, b, a; 
+    } Color;
+
+}
 #endif

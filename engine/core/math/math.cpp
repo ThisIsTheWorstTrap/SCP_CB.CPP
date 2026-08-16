@@ -1,54 +1,59 @@
 #include "math.hpp"
 
-// Coordinates methods
-float Coordinates::get_x() const 
+namespace Engine
 {
-    return x;
-}
 
-float Coordinates::get_y() const
-{
-    return y;
-}
+    // Coordinates methods
+    float Coordinates::get_x() const 
+    {
+        return x;
+    }
 
-float Coordinates::get_z() const
-{
-    return z;
-}
+    float Coordinates::get_y() const
+    {
+        return y;
+    }
 
-Coordinates Coordinates::operator+(const Coordinates& other) const
-{
-    return Coordinates(x+other.x, y+other.y, z+other.z);
-}
+    float Coordinates::get_z() const
+    {
+        return z;
+    }
+
+    Coordinates Coordinates::operator+(const Coordinates& other) const
+    {
+        return Coordinates(x+other.x, y+other.y, z+other.z);
+    }
 
 
-// Transform methods
-Coordinates Transform::get_position() const
-{
-    return position;
-}
+    // Transform methods
+    Coordinates Transform::get_position() const
+    {
+        return position;
+    }
 
-Coordinates Transform::get_rotation() const
-{
-    return rotation;
-}
+    Coordinates Transform::get_rotation() const
+    {
+        return rotation;
+    }
 
-float Transform::get_scale() const
-{
-    return scale;
-}
+    float Transform::get_scale() const
+    {
+        return scale;
+    }
 
-void Transform::set_position(Coordinates new_pos)
-{
-    position = new_pos;
-}
+    void Transform::set_position(Coordinates new_pos)
+    {
+        position = new_pos;
+    }
 
-void Transform::set_rotation(Coordinates new_rot)
-{
-    rotation = new_rot;
-}
+    void Transform::set_rotation(Coordinates new_rot)
+    {
+        rotation = new_rot;
+    }
 
-void Transform::set_scale(float new_scale) 
-{
-    scale = new_scale;
+    void Transform::set_scale(float new_scale) 
+    {
+        scale = new_scale;
+    }
+
 }
