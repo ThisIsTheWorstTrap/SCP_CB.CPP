@@ -10,22 +10,22 @@ class Renderer
     public:
         virtual ~Renderer()=default;
 
-        virtual void Init(int width, int height, const char* title)=0;
-        virtual void Shutdown()=0;
+        virtual void init_window(int width, int height, const char* title)=0;
+        virtual void close_window()=0;
 
-        virtual bool ShouldClose()=0;
-        virtual float GetDeltaTime()=0;
+        virtual bool window_should_close()=0;
+        virtual float get_delta_time()=0;
 
-        virtual void BeginFrame()=0;
-        virtual void EndFrame()=0;
+        virtual void begin_frame()=0;
+        virtual void end_frame()=0;
 
-        virtual void DrawCube(Coordinates position, float size, Color color)=0;
+        virtual void draw_cube(Engine::Coordinates position, float size, Engine::Color color)=0;
 
-        virtual TextureHandle LoadTexture(const char* path)=0;
-        virtual void DrawCubeTexture(TextureHandle handle, Coordinates position, float size, Color tint)=0;
+        virtual Engine::TextureHandle load_texture(const char* path)=0;
+        virtual void draw_cube_texture(Engine::TextureHandle handle, Engine::Coordinates position, float size, Engine::Color tint)=0;
 
-        virtual ModelHandle LoadModel(const char* path)=0;
-        virtual void DrawModel(ModelHandle handle, Coordinates position)=0;
+        virtual Engine::ModelHandle load_model(const char* path)=0;
+        virtual void draw_model(Engine::ModelHandle handle, Engine::Coordinates position)=0;
 };
 
 Renderer* CreateRenderer();
