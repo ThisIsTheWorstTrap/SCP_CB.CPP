@@ -1,67 +1,6 @@
 #include "RaylibRenderer.hpp"
 #include <rlgl.h>
 
-namespace
-{
-    void draw_textured_cube(Texture2D texture, Vector3 position, float size, ::Color tint)
-    {
-        float half = size / 2.0f;
-        float x = position.x;
-        float y = position.y;
-        float z = position.z;
-
-        rlSetTexture(texture.id);
-
-        rlBegin(RL_QUADS);
-            rlColor4ub(tint.r, tint.g, tint.b, tint.a);
-
-            // Frong
-            rlNormal3f(0.0f, 0.0f, 1.0f);
-            rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x - half, y - half, z + half);
-            rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x + half, y - half, z + half);
-            rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x + half, y + half, z + half);
-            rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x - half, y + half, z + half);
-
-            // Back
-            rlNormal3f(0.0f, 0.0f, -1.0f);
-            rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x - half, y - half, z - half);
-            rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x - half, y + half, z - half);
-            rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x + half, y + half, z - half);
-            rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x + half, y - half, z - half);
-
-            // Up
-            rlNormal3f(0.0f, 1.0f, 0.0f);
-            rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x - half, y + half, z - half);
-            rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x - half, y + half, z + half);
-            rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x + half, y + half, z + half);
-            rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x + half, y + half, z - half);
-
-            // Down
-            rlNormal3f(0.0f, -1.0f, 0.0f);
-            rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x - half, y - half, z - half);
-            rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x + half, y - half, z - half);
-            rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x + half, y - half, z + half);
-            rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x - half, y - half, z + half);
-
-            // Right
-            rlNormal3f(1.0f, 0.0f, 0.0f);
-            rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x + half, y - half, z - half);
-            rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x + half, y + half, z - half);
-            rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x + half, y + half, z + half);
-            rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x + half, y - half, z + half);
-
-            // Left
-            rlNormal3f(-1.0f, 0.0f, 0.0f);
-            rlTexCoord2f(0.0f, 0.0f); rlVertex3f(x - half, y - half, z - half);
-            rlTexCoord2f(1.0f, 0.0f); rlVertex3f(x - half, y - half, z + half);
-            rlTexCoord2f(1.0f, 1.0f); rlVertex3f(x - half, y + half, z + half);
-            rlTexCoord2f(0.0f, 1.0f); rlVertex3f(x - half, y + half, z - half);
-        rlEnd();
-
-        rlSetTexture(0);
-    }
-}
-
 RaylibRenderer::RaylibRenderer() : camera{}
 {
 }
@@ -126,18 +65,6 @@ Engine::TextureHandle RaylibRenderer::load_texture(const char* path)
 
     std::int32_t id = static_cast<std::int32_t>(textures.size() - 1);
     return Engine::TextureHandle(id);
-}
-
-void RaylibRenderer::draw_cube_texture(Engine::TextureHandle handle, Engine::Coordinates position, float size, Engine::Color tint)
-{
-    if (!handle.is_valid())
-        return;
-
-    Texture2D& texture = textures[handle.get_id()];
-    Vector3 pos = { position.get_x(), position.get_y(), position.get_z() };
-    ::Color rl_tint = { tint.r, tint.g, tint.b, tint.a };
-
-    draw_textured_cube(texture, pos, size, rl_tint);
 }
 
 Engine::ModelHandle RaylibRenderer::load_model(const char* path)
