@@ -1,5 +1,4 @@
 #include "RaylibRenderer.hpp"
-#include <rlgl.h>
 
 RaylibRenderer::RaylibRenderer() : camera{}
 {
