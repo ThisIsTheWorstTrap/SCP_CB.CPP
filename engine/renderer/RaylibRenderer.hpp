@@ -25,7 +25,8 @@ class RaylibRenderer : public Renderer
         void draw_cube_texture(Engine::TextureHandle handle, Engine::Coordinates position, float size, Engine::Color tint) override;
 
         Engine::ModelHandle load_model(const char* path) override;
-        void draw_model(Engine::ModelHandle handle, Engine::Coordinates position) override;
+        void draw_model(Engine::ModelHandle handle, Engine::Coordinates position, float scale) override;
+        void set_model_texture(Engine::ModelHandle model_handle, Engine::TextureHandle texture_handle) override;
 
     private:
         Camera3D camera;

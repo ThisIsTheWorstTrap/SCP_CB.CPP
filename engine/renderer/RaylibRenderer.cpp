@@ -70,10 +70,10 @@ void RaylibRenderer::init_window(int width, int height, const char* title)
 {
     InitWindow(width, height, title);
 
-    camera.position = { 0.0f, 5.0f, 10.0f };
+    camera.position = { 0.0f, 10.0f, 10.0f };
     camera.target   = { 0.0f, 0.0f, 0.0f };
     camera.up       = { 0.0f, 1.0f, 0.0f };
-    camera.fovy     = 45.0f;
+    camera.fovy     = 90.0f;
     camera.projection = CAMERA_PERSPECTIVE;
 }
 
@@ -149,7 +149,7 @@ Engine::ModelHandle RaylibRenderer::load_model(const char* path)
     return Engine::ModelHandle(id);
 }
 
-void RaylibRenderer::draw_model(Engine::ModelHandle handle, Engine::Coordinates position)
+void RaylibRenderer::draw_model(Engine::ModelHandle handle, Engine::Coordinates position, float scale)
 {
     if (!handle.is_valid())
         return;
@@ -157,5 +157,16 @@ void RaylibRenderer::draw_model(Engine::ModelHandle handle, Engine::Coordinates 
     Model& model = models[handle.get_id()];
     Vector3 pos = { position.get_x(), position.get_y(), position.get_z() };
 
-    ::DrawModel(model, pos, 1.0f, WHITE);
+    ::DrawModel(model, pos, scale, WHITE);
+}
+
+void RaylibRenderer::set_model_texture(Engine::ModelHandle model_handle, Engine::TextureHandle texture_handle)
+{
+    if (!model_handle.is_valid() || !texture_handle.is_valid())
+        return;
+
+    Model& model = models[model_handle.get_id()];
+    Texture2D& texture = textures[texture_handle.get_id()];
+
+    SetMaterialTexture(&model.materials[0], MATERIAL_MAP_DIFFUSE, texture);
 }

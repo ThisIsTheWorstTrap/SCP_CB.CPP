@@ -25,7 +25,8 @@ class Renderer
         virtual void draw_cube_texture(Engine::TextureHandle handle, Engine::Coordinates position, float size, Engine::Color tint)=0;
 
         virtual Engine::ModelHandle load_model(const char* path)=0;
-        virtual void draw_model(Engine::ModelHandle handle, Engine::Coordinates position)=0;
+        virtual void draw_model(Engine::ModelHandle handle, Engine::Coordinates position, float scale) = 0;
+        virtual void set_model_texture(Engine::ModelHandle model_handle, Engine::TextureHandle texture_handle) = 0;
 };
 
 Renderer* CreateRenderer();
