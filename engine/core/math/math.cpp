@@ -25,6 +25,18 @@ namespace Engine
     }
 
 
+    // Coordinates2d methods
+    float Coordinates2d::get_x() const
+    {
+        return x;
+    }
+
+    float Coordinates2d::get_y() const
+    {
+        return y;
+    }
+
+
     // Transform methods
     Coordinates Transform::get_position() const
     {

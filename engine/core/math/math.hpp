@@ -19,6 +19,18 @@ namespace Engine
             float x, y, z;
     };
 
+    class Coordinates2d
+    {
+        public:
+            Coordinates2d(float x=0.0f, float y=0.0f): x(x), y(y) {};
+
+            float get_x() const;
+            float get_y() const;
+
+        private:
+            float x, y;
+    };
+
     class Transform
     {
         public:
