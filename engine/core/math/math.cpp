@@ -24,6 +24,24 @@ namespace Engine
         return Coordinates(x+other.x, y+other.y, z+other.z);
     }
 
+    Coordinates Coordinates::operator-(const Coordinates& other) const
+    {
+        return Coordinates(x - other.x, y - other.y, z - other.z);
+    }
+
+    Coordinates Coordinates::operator*(float scalar) const
+    {
+        return Coordinates(x * scalar, y * scalar, z * scalar);
+    }
+
+    Coordinates& Coordinates::operator+=(const Coordinates& other)
+    {
+        x += other.x;
+        y += other.y;
+        z += other.z;
+        return *this;
+    }
+
 
     // Coordinates2d methods
     float Coordinates2d::get_x() const

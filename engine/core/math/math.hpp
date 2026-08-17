@@ -1,5 +1,5 @@
-#ifndef MATH_CPP
-#define MATH_CPP
+#ifndef MATH_HPP
+#define MATH_HPP
 
 namespace Engine
 {
@@ -14,6 +14,9 @@ namespace Engine
             float get_z() const;
 
             Coordinates operator+(const Coordinates& other) const;
+            Coordinates operator-(const Coordinates& other) const;
+            Coordinates operator*(const float scalar) const;
+            Coordinates& operator+=(const Coordinates& other);
 
         private:
             float x, y, z;

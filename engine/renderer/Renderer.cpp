@@ -1,7 +1,7 @@
 #include "Renderer.hpp"
 #include "RaylibRenderer.hpp"
 
-Renderer* CreateRenderer()
+std::unique_ptr<Renderer> CreateRenderer()
 {
-    return new RaylibRenderer();
+    return std::make_unique<RaylibRenderer>();
 }

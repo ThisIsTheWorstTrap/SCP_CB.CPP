@@ -49,6 +49,16 @@ void RaylibRenderer::end_frame()
     EndDrawing();
 }
 
+void RaylibRenderer::set_camera_position(Engine::Coordinates position)
+{
+    camera.position = Vector3{position.get_x(), position.get_y(), position.get_z()};
+}
+
+void RaylibRenderer::set_camera_target(Engine::Coordinates target)
+{
+    camera.target = Vector3{target.get_x(), target.get_y(), target.get_z()};
+}
+
 void RaylibRenderer::draw_cube(Engine::Coordinates position, float size, Engine::Color color)
 {
     Vector3 pos = { position.get_x(), position.get_y(), position.get_z() };
