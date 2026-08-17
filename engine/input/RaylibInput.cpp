@@ -21,12 +21,12 @@ bool RaylibInput::is_key_pressed(Key key)
     return IsKeyPressed(to_raylib_key(key));
 }
 
-bool RaylibInput::is_mouse_button_down(MouseButton button)
+bool RaylibInput::is_mouse_button_down(Engine::MouseButton button)
 {
     return IsMouseButtonDown(to_raylib_mouse_button(button));
 }
 
-Coordinates2d RaylibInput::get_mouse_delta()
+Engine::Coordinates2d RaylibInput::get_mouse_delta()
 {
     Vector2 delta = GetMouseDelta();
     return Engine::Coordinates2d{delta.x, delta.y};
@@ -62,13 +62,13 @@ int RaylibInput::to_raylib_key(Key key)
     return KEY_NULL;
 }
 
-int RaylibInput::to_raylib_mouse_button(MouseButton button)
+int RaylibInput::to_raylib_mouse_button(Engine::MouseButton button)
 {
     switch (button)
     {
-        case MouseButton::Left:   return MOUSE_BUTTON_LEFT;
-        case MouseButton::Right:  return MOUSE_BUTTON_RIGHT;
-        case MouseButton::Middle: return MOUSE_BUTTON_MIDDLE;
+        case Engine::MouseButton::Left:   return MOUSE_BUTTON_LEFT;
+        case Engine::MouseButton::Right:  return MOUSE_BUTTON_RIGHT;
+        case Engine::MouseButton::Middle: return MOUSE_BUTTON_MIDDLE;
     }
 
     return MOUSE_BUTTON_LEFT;

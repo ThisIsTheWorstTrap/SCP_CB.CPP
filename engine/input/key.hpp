@@ -4,13 +4,16 @@
 enum class Key
 {
     W, A, S, D,
-    Space, LeftShift, Escape,
-    Tab, F5
+    Space, LeftShift, Escape
 };
 
-enum class MouseButton
-{
-    Left, Right, Middle
-};
+namespace Engine {
+
+    enum class MouseButton
+    {
+        Left, Right, Middle
+    };
+
+}
 
 #endif
