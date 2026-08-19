@@ -14,6 +14,8 @@ add_executable(${PROJECT_NAME}
     engine/core/math/math.cpp
     engine/renderer/Renderer.cpp
     engine/renderer/RaylibRenderer.cpp
+    engine/input/Input.cpp
+    engine/input/RaylibInput.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

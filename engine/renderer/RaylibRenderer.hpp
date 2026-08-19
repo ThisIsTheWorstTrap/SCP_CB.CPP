@@ -19,6 +19,9 @@ class RaylibRenderer : public Renderer
         void begin_frame() override;
         void end_frame() override;
 
+        void set_camera_position(Engine::Coordinates position) override;
+        void set_camera_target(Engine::Coordinates target) override;
+
         void draw_cube(Engine::Coordinates position, float size, Engine::Color color) override;
 
         Engine::TextureHandle load_texture(const char* path) override;

@@ -1,5 +1,7 @@
-#ifndef MATH_CPP
-#define MATH_CPP
+#ifndef MATH_HPP
+#define MATH_HPP
+
+#include <cmath>
 
 namespace Engine
 {
@@ -14,9 +16,28 @@ namespace Engine
             float get_z() const;
 
             Coordinates operator+(const Coordinates& other) const;
+            Coordinates operator-(const Coordinates& other) const;
+            Coordinates operator*(const float scalar) const;
+            Coordinates& operator+=(const Coordinates& other);
+
+            Coordinates cross(const Coordinates& other) const;
+            float length() const;
+            Coordinates normalized() const;
 
         private:
             float x, y, z;
+    };
+
+    class Coordinates2d
+    {
+        public:
+            Coordinates2d(float x=0.0f, float y=0.0f): x(x), y(y) {};
+
+            float get_x() const;
+            float get_y() const;
+
+        private:
+            float x, y;
     };
 
     class Transform

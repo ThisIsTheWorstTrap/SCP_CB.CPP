@@ -4,6 +4,7 @@
 #include "engine/core/math/math.hpp"
 #include "engine/core/handle/handle.hpp"
 #include "color.hpp"
+#include <memory>
 
 class Renderer
 {
@@ -19,6 +20,9 @@ class Renderer
         virtual void begin_frame() = 0;
         virtual void end_frame() = 0;
 
+        virtual void set_camera_position(Engine::Coordinates position) = 0;
+        virtual void set_camera_target(Engine::Coordinates target) = 0;
+
         virtual void draw_cube(Engine::Coordinates position, float size, Engine::Color color) = 0;
 
         virtual Engine::TextureHandle load_texture(const char* path) = 0;
@@ -28,6 +32,6 @@ class Renderer
         virtual void set_model_texture(Engine::ModelHandle model_handle, Engine::TextureHandle texture_handle) = 0;
 };
 
-Renderer* CreateRenderer();
+std::unique_ptr<Renderer> CreateRenderer();
 
 #endif
