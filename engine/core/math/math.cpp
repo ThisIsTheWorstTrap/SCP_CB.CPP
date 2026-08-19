@@ -42,6 +42,27 @@ namespace Engine
         return *this;
     }
 
+    Coordinates Coordinates::cross(const Coordinates& other) const
+    {
+        return Coordinates(
+            y * other.z - z * other.y,
+            z * other.x - x * other.z,
+            x * other.y - y * other.x
+        );
+    }
+
+    float Coordinates::length() const
+    {
+        return sqrtf(x * x + y * y + z * z);
+    }
+
+    Coordinates Coordinates::normalized() const
+    {
+        float len = length();
+        if (len == 0.0f) return Coordinates(0.0f, 0.0f, 0.0f);
+        return Coordinates(x / len, y / len, z / len);
+    }
+
 
     // Coordinates2d methods
     float Coordinates2d::get_x() const

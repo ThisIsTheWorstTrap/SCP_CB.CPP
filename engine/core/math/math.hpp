@@ -1,6 +1,8 @@
 #ifndef MATH_HPP
 #define MATH_HPP
 
+#include <cmath>
+
 namespace Engine
 {
 
@@ -17,6 +19,10 @@ namespace Engine
             Coordinates operator-(const Coordinates& other) const;
             Coordinates operator*(const float scalar) const;
             Coordinates& operator+=(const Coordinates& other);
+
+            Coordinates cross(const Coordinates& other) const;
+            float length() const;
+            Coordinates normalized() const;
 
         private:
             float x, y, z;
