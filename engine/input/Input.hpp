@@ -1,7 +1,7 @@
 #ifndef INPUT_HPP
 #define INPUT_HPP
 
-#include "Key.hpp"
+#include "key.hpp"
 #include "engine/core/math/math.hpp"
 #include <memory>
 

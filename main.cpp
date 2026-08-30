@@ -1,4 +1,4 @@
-#include "engine/renderer/renderer.hpp"
+#include "engine/renderer/Renderer.hpp"
 #include "engine/input/Input.hpp"
 
 int main()
@@ -8,7 +8,7 @@ int main()
 
     renderer->init_window(1280, 720, "SCP Remake");
 
-    Engine::ModelHandle mod = renderer->load_model("../models/surgeonzombie.glb");
+    Engine::ModelHandle mod = renderer->load_model("../models/zombiesurgeon.glb");
     Engine::Coordinates mod_pos(0.0f, 0.0f, 0.0f);
 
     Engine::Coordinates camera_position(0.0f, 2.0f, 0.0f);

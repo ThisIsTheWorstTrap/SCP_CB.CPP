@@ -1,7 +1,7 @@
 #ifndef RAYLIB_RENDERER_HPP
 #define RAYLIB_RENDERER_HPP
 
-#include "renderer.hpp"
+#include "Renderer.hpp"
 #include <raylib.h>
 #include <vector>
 

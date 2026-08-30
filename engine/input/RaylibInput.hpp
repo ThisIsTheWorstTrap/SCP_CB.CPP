@@ -2,7 +2,7 @@
 #define RAYLIB_INPUT_HPP
 
 #include "Input.hpp"
-#include "Key.hpp"
+#include "key.hpp"
 #include "engine/core/math/math.hpp"
 
 class RaylibInput : public Input
