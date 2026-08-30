@@ -10,6 +10,7 @@ find_package(raylib REQUIRED)
 
 add_executable(${PROJECT_NAME}
     main.cpp
+    model_viewer.cpp
     engine/core/math/math.cpp
     engine/renderer/Renderer.cpp
     engine/renderer/RaylibRenderer.cpp

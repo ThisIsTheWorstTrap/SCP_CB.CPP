@@ -35,7 +35,7 @@ void RaylibRenderer::begin_frame()
 {
     BeginDrawing();
     ClearBackground(BLACK);
-    BeginMode3D(camera);
+    BeginMode3D(camera); 
 }
 
 void RaylibRenderer::end_frame()
