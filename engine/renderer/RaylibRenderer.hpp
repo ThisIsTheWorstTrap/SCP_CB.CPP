@@ -3,7 +3,7 @@
 
 #include "Renderer.hpp"
 #include <raylib.h>
-#include <vector>
+#include <unordered_map>
 
 class RaylibRenderer : public Renderer
 {
@@ -22,17 +22,13 @@ class RaylibRenderer : public Renderer
         void set_camera_position(Engine::Coordinates position) override;
         void set_camera_target(Engine::Coordinates target) override;
 
-        void draw_cube(Engine::Coordinates position, float size, Engine::Color color) override;
-
-        Engine::TextureHandle load_texture(const char* path) override;
-        Engine::ModelHandle load_model(const char* path) override;
-        void draw_model(Engine::ModelHandle handle, Engine::Coordinates position, float scale) override;
-        void set_model_texture(Engine::ModelHandle model_handle, Engine::TextureHandle texture_handle) override;
+        void load_model(const char* path, int id) override;
+        void add_model_scene(int model_id, Engine::Coordinates position) override;
 
     private:
         Camera3D camera;
-        std::vector<Model> models;
-        std::vector<Texture2D> textures;
+        std::unordered_map<int, Model> models;
+        std::unordered_map<int, Texture2D> textures;
 };
 
 #endif

@@ -17,12 +17,7 @@ void RaylibRenderer::init_window(int width, int height, const char* title)
 
 void RaylibRenderer::close_window()
 {
-    for (Texture2D& texture : textures)
-        UnloadTexture(texture);
-
-    for (Model& model : models)
-        UnloadModel(model);
-
+    // TODO unload models and sounds...
     CloseWindow();
 }
 
@@ -59,50 +54,15 @@ void RaylibRenderer::set_camera_target(Engine::Coordinates target)
     camera.target = Vector3{target.get_x(), target.get_y(), target.get_z()};
 }
 
-void RaylibRenderer::draw_cube(Engine::Coordinates position, float size, Engine::Color color)
-{
-    Vector3 pos = { position.get_x(), position.get_y(), position.get_z() };
-    ::Color rl_color = { color.r, color.g, color.b, color.a };
-
-    ::DrawCube(pos, size, size, size, rl_color);
-}
-
-Engine::TextureHandle RaylibRenderer::load_texture(const char* path)
-{
-    Texture2D texture = ::LoadTexture(path);
-    textures.push_back(texture);
-
-    std::int32_t id = static_cast<std::int32_t>(textures.size() - 1);
-    return Engine::TextureHandle(id);
-}
-
-Engine::ModelHandle RaylibRenderer::load_model(const char* path)
+void RaylibRenderer::load_model(const char* path, int model_id)
 {
     Model model = ::LoadModel(path);
-    models.push_back(model);
-
-    std::int32_t id = static_cast<std::int32_t>(models.size() - 1);
-    return Engine::ModelHandle(id);
+    models[model_id] = model;
 }
 
-void RaylibRenderer::draw_model(Engine::ModelHandle handle, Engine::Coordinates position, float scale)
+void RaylibRenderer::add_model_scene(int model_id, Engine::Coordinates position)
 {
-    if (!handle.is_valid())
-        return;
-
-    Model& model = models[handle.get_id()];
+    Model& model = models[model_id];
     Vector3 pos = { position.get_x(), position.get_y(), position.get_z() };
-
-    ::DrawModel(model, pos, scale, WHITE);
-}
-
-void RaylibRenderer::set_model_texture(Engine::ModelHandle model_handle, Engine::TextureHandle texture_handle)
-{
-    if (!model_handle.is_valid() || !texture_handle.is_valid())
-        return;
-
-    Model& model = models[model_handle.get_id()];
-    Texture2D& texture = textures[texture_handle.get_id()];
-
-    SetMaterialTexture(&model.materials[0], MATERIAL_MAP_DIFFUSE, texture);
+    ::DrawModel(model, pos, 1.0f, WHITE);
 }

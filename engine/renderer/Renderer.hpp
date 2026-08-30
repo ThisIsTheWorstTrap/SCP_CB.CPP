@@ -2,7 +2,6 @@
 #define RENDERER_HPP
 
 #include "engine/core/math/math.hpp"
-#include "engine/core/handle/handle.hpp"
 #include "color.hpp"
 #include <memory>
 
@@ -23,13 +22,8 @@ class Renderer
         virtual void set_camera_position(Engine::Coordinates position) = 0;
         virtual void set_camera_target(Engine::Coordinates target) = 0;
 
-        virtual void draw_cube(Engine::Coordinates position, float size, Engine::Color color) = 0;
-
-        virtual Engine::TextureHandle load_texture(const char* path) = 0;
-
-        virtual Engine::ModelHandle load_model(const char* path) = 0;
-        virtual void draw_model(Engine::ModelHandle handle, Engine::Coordinates position, float scale) = 0;
-        virtual void set_model_texture(Engine::ModelHandle model_handle, Engine::TextureHandle texture_handle) = 0;
+        virtual void load_model(const char* path, int id) = 0;
+        virtual void add_model_scene(int model_id, Engine::Coordinates position) = 0;
 };
 
 std::unique_ptr<Renderer> CreateRenderer();

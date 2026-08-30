@@ -8,8 +8,9 @@ int main()
 
     renderer->init_window(1280, 720, "SCP Remake");
 
-    Engine::ModelHandle mod = renderer->load_model("../models/zombiesurgeon.glb");
+    renderer->load_model("../models/zombiesurgeon.glb", 1);
     Engine::Coordinates mod_pos(0.0f, 0.0f, 0.0f);
+    renderer->add_model_scene(1, mod_pos);
 
     Engine::Coordinates camera_position(0.0f, 2.0f, 0.0f);
     float yaw = 0.0f;
@@ -59,7 +60,7 @@ int main()
         renderer->set_camera_target(camera_position + forward);
 
         renderer->begin_frame();
-        renderer->draw_model(mod, mod_pos, 0.1f);
+        renderer->add_model_scene(1, mod_pos);
         renderer->end_frame();
     }
 
