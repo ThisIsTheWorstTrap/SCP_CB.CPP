@@ -14,6 +14,7 @@ void ModelViewer::load_models(std::string models_folder_path)
     std::string model_names[] = {
         "035",
         "035tentacle",
+        "1499",
         "173_2",
         "205_demon1",
         "205_demon2",
