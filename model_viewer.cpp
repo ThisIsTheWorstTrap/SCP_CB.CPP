@@ -1,22 +1,31 @@
 #include "model_viewer.hpp"
+#include <string>
 
-ModelViewer::ModelViewer()
+ModelViewer::ModelViewer(std::string path)
 {
     this->renderer = CreateRenderer();
     this->input = CreateInput();
     renderer->init_window(1280, 720, "SCP Remake");
-    load_models();
+    load_models(path);
 }
 
-void ModelViewer::load_models()
+void ModelViewer::load_models(std::string models_folder_path)
 {
-    renderer->load_model("/home/nolann/Documents/Projet/SCP_CB.CPP/models/035.glb", MODEL_035);
-    renderer->load_model("/home/nolann/Documents/Projet/SCP_CB.CPP/models/035tentacle.glb", MODEL_035_TENT);
-    renderer->load_model("/home/nolann/Documents/Projet/SCP_CB.CPP/models/173_2.glb", MODEL_173_2);
-    renderer->load_model("/home/nolann/Documents/Projet/SCP_CB.CPP/models/205_demon1.glb", MODEL_205_DEMON1);
-    renderer->load_model("/home/nolann/Documents/Projet/SCP_CB.CPP/models/205_demon2.glb", MODEL_205_DEMON2);
-    renderer->load_model("/home/nolann/Documents/Projet/SCP_CB.CPP/models/205_demon3.glb", MODEL_205_DEMON3);
-    renderer->load_model("/home/nolann/Documents/Projet/SCP_CB.CPP/models/205_woman.glb", MODEL_205_WOMAN);
+    std::string model_names[] = {
+        "035",
+        "035tentacle",
+        "173_2",
+        "205_demon1",
+        "205_demon2",
+        "205_demon3",
+        "205_woman"
+    };
+
+    for (int i=0; i<__MODEL_LAST; i++)
+    {
+        std::string model_path = models_folder_path + model_names[i] + ".glb";
+        renderer->load_model(model_path.c_str(), (ModelsEnum)i);
+    }
 }
 
 void ModelViewer::add_model(ModelsEnum model)

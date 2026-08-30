@@ -13,15 +13,16 @@ typedef enum
     MODEL_205_DEMON1,
     MODEL_205_DEMON2,
     MODEL_205_DEMON3,
-    MODEL_205_WOMAN
+    MODEL_205_WOMAN,
+    __MODEL_LAST
 } ModelsEnum;
 
 class ModelViewer
 {
     public:
-        ModelViewer();
+        ModelViewer(std::string path);
 
-        void load_models();
+        void load_models(std::string path);
         void add_model(ModelsEnum model);
         
         void run();

@@ -4,6 +4,7 @@
 #include "engine/core/math/math.hpp"
 #include "color.hpp"
 #include <memory>
+#include <string>
 
 class Renderer
 {
