@@ -66,3 +66,9 @@ void RaylibRenderer::add_model_scene(int model_id, Engine::Coordinates position)
     Vector3 pos = { position.get_x(), position.get_y(), position.get_z() };
     ::DrawModel(model, pos, 1.0f, WHITE);
 }
+
+float RaylibRenderer::get_model_height(int model_id)
+{
+    BoundingBox bbox = ::GetModelBoundingBox(models[model_id]);
+    return bbox.max.y - bbox.min.y;
+}

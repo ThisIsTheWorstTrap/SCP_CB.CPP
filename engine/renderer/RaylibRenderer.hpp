@@ -25,6 +25,8 @@ class RaylibRenderer : public Renderer
         void load_model(const char* path, int id) override;
         void add_model_scene(int model_id, Engine::Coordinates position) override;
 
+        float get_model_height(int model_id) override;
+
     private:
         Camera3D camera;
         std::unordered_map<int, Model> models;

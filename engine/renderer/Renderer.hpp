@@ -25,6 +25,8 @@ class Renderer
 
         virtual void load_model(const char* path, int id) = 0;
         virtual void add_model_scene(int model_id, Engine::Coordinates position) = 0;
+
+        virtual float get_model_height(int model_id) = 0;
 };
 
 std::unique_ptr<Renderer> CreateRenderer();

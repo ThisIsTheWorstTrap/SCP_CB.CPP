@@ -1,5 +1,6 @@
 #include "model_viewer.hpp"
 #include <string>
+#include <iostream>
 
 ModelViewer::ModelViewer(std::string path)
 {
@@ -34,10 +35,26 @@ void ModelViewer::add_model(ModelsEnum model)
     renderer->add_model_scene((int)model, Engine::Coordinates(0, 0, 0));
 }
 
+void ModelViewer::fit_camera_to_model(int model_id, Engine::Coordinates& out_position, float& out_yaw, float& out_pitch)
+{
+    float model_height = renderer->get_model_height(model_id);
+    float center = model_height / 2.0f;
+
+    float fovy = 45.0f;
+    float fov_rad = fovy * (3.14159265f / 180.0f);
+    float distance = (model_height / tanf(fov_rad * 0.5f)) * 1.5f;
+
+    Engine::Coordinates position(0.0f, center, distance);
+
+    out_position = position;
+    out_yaw = 3.14159265f;
+    out_pitch = 0.0f;
+}
+
 void ModelViewer::run()
 {
-    Engine::Coordinates camera_position(0.0f, 2.0f, 0.0f);
-    float yaw = 0.0f;
+    Engine::Coordinates camera_position(0.0f, 2.0f, 5.0f);
+    float yaw = 3.14159265f; // face -Z
     float pitch = 0.0f;
 
     const float move_speed = 10.0f;
@@ -45,6 +62,8 @@ void ModelViewer::run()
 
     bool cursor_currently_hidden = true;
     input->hide_cursor();
+
+    bool camera_fitted = false;
 
     while (!renderer->window_should_close())
     {
@@ -64,6 +83,22 @@ void ModelViewer::run()
 
             if (pitch > 1.5f) pitch = 1.5f;
             if (pitch < -1.5f) pitch = -1.5f;
+        }
+
+        if (!camera_fitted)
+        {
+            float model_height = renderer->get_model_height((int)MODEL_173_2);
+
+            if (model_height > 0.0f)
+            {
+                float fovy = 45.0f;
+                float fov_rad = fovy * (3.14159265f / 180.0f);
+                float distance = (model_height / tanf(fov_rad * 0.5f)) * 1.5f;
+
+                camera_position = Engine::Coordinates(0.0f, model_height * 0.5f, distance);
+                yaw = 3.14159265f;
+                camera_fitted = true;
+            }
         }
 
         Engine::Coordinates forward(
@@ -87,6 +122,4 @@ void ModelViewer::run()
         add_model(MODEL_173_2);
         renderer->end_frame();
     }
-
-    renderer->close_window();
 }
