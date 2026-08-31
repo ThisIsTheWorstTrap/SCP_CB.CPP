@@ -32,7 +32,7 @@ Engine::Coordinates2d RaylibInput::get_mouse_delta()
     return Engine::Coordinates2d{delta.x, delta.y};
 }
 
-void RaylibInput::hide_cursor()
+void RaylibInput::switch_cursor()
 {
     cursor_hidden = !cursor_hidden;
 

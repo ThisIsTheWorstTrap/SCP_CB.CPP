@@ -2,6 +2,9 @@
 #include <string>
 #include <iostream>
 
+#define RAYGUI_IMPLEMENTATION
+#include "lib/raygui.h"
+
 ModelViewer::ModelViewer(std::string path)
 {
     this->renderer = CreateRenderer();
@@ -61,42 +64,77 @@ void ModelViewer::run()
     const float mouse_sensitivity = 0.003f;
 
     bool cursor_currently_hidden = true;
-    input->hide_cursor();
+    input->switch_cursor();
 
     bool camera_fitted = false;
+
+    bool drop_down_edit_mode = false;
+    int drop_down_active = 0;
 
     while (!renderer->window_should_close())
     {
         float delta_time = renderer->get_delta_time();
 
-        if (input->is_key_pressed(Key::Escape))
+        
+        if (GuiDropdownBox((Rectangle){ 100, 80, 200, 30 },
+                           "MODEL_035;MODEL_035_TENT;MODEL_1499;MODEL_173_2",
+                           &drop_down_active, drop_down_edit_mode))
         {
-            input->hide_cursor();
+            drop_down_edit_mode = !drop_down_edit_mode;
+            camera_fitted = !camera_fitted;
+        }
+        
+
+        if (input->is_mouse_button_down(Engine::MouseButton::Right))
+        {
             cursor_currently_hidden = !cursor_currently_hidden;
+            input->switch_cursor();
         }
 
         if (cursor_currently_hidden)
         {
-            Engine::Coordinates2d mouse_delta = input->get_mouse_delta();
+            Engine::Coordinates2d mouse_delta =
+                input->get_mouse_delta();
+
             yaw   -= mouse_delta.get_x() * mouse_sensitivity;
             pitch -= mouse_delta.get_y() * mouse_sensitivity;
 
-            if (pitch > 1.5f) pitch = 1.5f;
-            if (pitch < -1.5f) pitch = -1.5f;
+            if (pitch > 1.5f)
+                pitch = 1.5f;
+
+            if (pitch < -1.5f)
+                pitch = -1.5f;
         }
 
         if (!camera_fitted)
         {
-            float model_height = renderer->get_model_height((int)MODEL_173_2);
+            float model_height =
+                renderer->get_model_height(drop_down_active);
 
             if (model_height > 0.0f)
             {
-                float fovy = 45.0f;
-                float fov_rad = fovy * (3.14159265f / 180.0f);
-                float distance = (model_height / tanf(fov_rad * 0.5f)) * 1.5f;
+                const float fovy = 45.0f;
+                const float fov_rad =
+                    fovy * (3.14159265f / 180.0f);
 
-                camera_position = Engine::Coordinates(0.0f, model_height * 0.5f, distance);
+                float distance =
+                    (model_height * 0.5f) /
+                    tanf(fov_rad * 0.5f);
+
+                distance *= 1.3f;
+
+                float center = model_height * 0.5f;
+
+                camera_position =
+                    Engine::Coordinates(
+                        0.0f,
+                        center,
+                        distance
+                    );
+
                 yaw = 3.14159265f;
+                pitch = 0.0f;
+
                 camera_fitted = true;
             }
         }
@@ -108,7 +146,9 @@ void ModelViewer::run()
         );
 
         Engine::Coordinates up(0.0f, 1.0f, 0.0f);
-        Engine::Coordinates right = forward.cross(up).normalized();
+
+        Engine::Coordinates right =
+            forward.cross(up).normalized();
 
         if (input->is_key_down(Key::W)) camera_position += forward * (move_speed * delta_time);
         if (input->is_key_down(Key::S)) camera_position += forward * (-move_speed * delta_time);
@@ -116,10 +156,12 @@ void ModelViewer::run()
         if (input->is_key_down(Key::A)) camera_position += right * (-move_speed * delta_time);
 
         renderer->set_camera_position(camera_position);
-        renderer->set_camera_target(camera_position + forward);
+        renderer->set_camera_target(
+            camera_position + forward
+        );
 
         renderer->begin_frame();
-        add_model(MODEL_173_2);
+        add_model((ModelsEnum)drop_down_active);
         renderer->end_frame();
     }
 }

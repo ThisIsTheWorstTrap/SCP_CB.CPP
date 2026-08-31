@@ -9,7 +9,7 @@
         "type": "cppdbg",
         "request": "launch",
         "program": "${workspaceFolder}/build/scp_remake",
-        "args": ["../models/"],
+        "args": ["/home/nolann/Documents/Projet/SCP_CB.CPP/models/"],
         "stopAtEntry": false,
         "cwd": "${fileDirname}",
         "environment": [],
