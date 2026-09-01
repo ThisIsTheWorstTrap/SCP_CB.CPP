@@ -33,22 +33,6 @@ void ModelViewer::add_model(ModelsEnum model)
     renderer->add_model_scene((int)model, Engine::Coordinates(0, 0, 0));
 }
 
-void ModelViewer::fit_camera_to_model(int model_id, Engine::Coordinates& out_position, float& out_yaw, float& out_pitch)
-{
-    float model_height = renderer->get_model_height(model_id);
-    float center = model_height / 2.0f;
-
-    float fovy = 45.0f;
-    float fov_rad = fovy * (3.14159265f / 180.0f);
-    float distance = (model_height / tanf(fov_rad * 0.5f)) * 1.5f;
-
-    Engine::Coordinates position(0.0f, center, distance);
-
-    out_position = position;
-    out_yaw = 3.14159265f;
-    out_pitch = 0.0f;
-}
-
 void ModelViewer::run()
 {
     Engine::Coordinates camera_position(0.0f, 2.0f, 5.0f);

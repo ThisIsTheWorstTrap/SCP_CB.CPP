@@ -19,7 +19,6 @@ class ModelViewer
 
         void load_models(std::string path);
         void add_model(ModelsEnum model);
-        void fit_camera_to_model(int model_id, Engine::Coordinates& out_position, float& out_yaw, float& out_pitch);
         
         void run();
 
