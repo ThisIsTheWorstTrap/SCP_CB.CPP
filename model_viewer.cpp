@@ -18,12 +18,7 @@ void ModelViewer::load_models(std::string models_folder_path)
     std::string model_names[] = {
         "035",
         "035tentacle",
-        "1499",
-        "173_2",
-        "205_demon1",
-        "205_demon2",
-        "205_demon3",
-        "205_woman"
+        "173_2"
     };
 
     for (int i=0; i<__MODEL_LAST; i++)
@@ -77,7 +72,7 @@ void ModelViewer::run()
 
         
         if (GuiDropdownBox((Rectangle){ 100, 80, 200, 30 },
-                           "MODEL_035;MODEL_035_TENT;MODEL_1499;MODEL_173_2",
+                           "MODEL_035;MODEL_035_TENT;MODEL_173_2",
                            &drop_down_active, drop_down_edit_mode))
         {
             drop_down_edit_mode = !drop_down_edit_mode;

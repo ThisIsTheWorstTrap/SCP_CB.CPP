@@ -8,12 +8,7 @@ typedef enum
 {
     MODEL_035,
     MODEL_035_TENT,
-    MODEL_1499,
     MODEL_173_2,
-    MODEL_205_DEMON1,
-    MODEL_205_DEMON2,
-    MODEL_205_DEMON3,
-    MODEL_205_WOMAN,
     __MODEL_LAST
 } ModelsEnum;
 
