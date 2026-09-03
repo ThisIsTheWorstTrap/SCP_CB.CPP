@@ -22,7 +22,7 @@ class RaylibRenderer : public Renderer
         void set_camera_position(Engine::Coordinates position) override;
         void set_camera_target(Engine::Coordinates target) override;
 
-        void load_model(const char* path, int id) override;
+        void load_model_anims(const char* path, int id, int* anim_count) override;
         void add_model_scene(int model_id, Engine::Coordinates position) override;
 
         float get_model_height(int model_id) override;
@@ -30,7 +30,7 @@ class RaylibRenderer : public Renderer
     private:
         Camera3D camera;
         std::unordered_map<int, Model> models;
-        std::unordered_map<int, Texture2D> textures;
+        std::unordered_map<int, ModelAnimation*> model_animations;
 };
 
 #endif

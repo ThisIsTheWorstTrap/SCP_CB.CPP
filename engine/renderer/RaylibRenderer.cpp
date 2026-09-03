@@ -54,10 +54,13 @@ void RaylibRenderer::set_camera_target(Engine::Coordinates target)
     camera.target = Vector3{target.get_x(), target.get_y(), target.get_z()};
 }
 
-void RaylibRenderer::load_model(const char* path, int model_id)
+void RaylibRenderer::load_model_anims(const char* path, int model_id, int* anim_count)
 {
     Model model = ::LoadModel(path);
     models[model_id] = model;
+
+    ModelAnimation* anim = ::LoadModelAnimations(path, anim_count);
+    if (*anim_count > 0) model_animations[model_id] = anim;
 }
 
 void RaylibRenderer::add_model_scene(int model_id, Engine::Coordinates position)
