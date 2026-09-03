@@ -19,12 +19,15 @@ void ModelViewer::load_models(std::string models_folder_path)
         "035",
         "035tentacle",
         "173_2"
+        "scp-049"
     };
 
     for (int i=0; i<__MODEL_LAST; i++)
     {
         std::string model_path = models_folder_path + model_names[i] + ".glb";
-        renderer->load_model(model_path.c_str(), (ModelsEnum)i);
+        int anim_num = 0;
+        renderer->load_model_anims(model_path.c_str(), (ModelsEnum)i, &anim_num);
+        anims_count_from_model[i] = anim_num;
     }
 }
 

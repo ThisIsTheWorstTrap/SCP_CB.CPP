@@ -27,6 +27,8 @@ class RaylibRenderer : public Renderer
 
         float get_model_height(int model_id) override;
 
+        void play_selected_animation(int model_id, int anim_num, float frame) override;
+
     private:
         Camera3D camera;
         std::unordered_map<int, Model> models;

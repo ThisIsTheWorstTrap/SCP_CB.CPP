@@ -27,6 +27,8 @@ class Renderer
         virtual void add_model_scene(int model_id, Engine::Coordinates position) = 0;
 
         virtual float get_model_height(int model_id) = 0;
+
+        virtual void play_selected_animation(int model_id, int anim_num, float frame) = 0;
 };
 
 std::unique_ptr<Renderer> CreateRenderer();

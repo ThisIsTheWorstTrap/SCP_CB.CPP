@@ -3,12 +3,13 @@
 
 #include "engine/renderer/Renderer.hpp"
 #include "engine/input/Input.hpp"
+#include <unordered_map>
 
 typedef enum
 {
     MODEL_035,
-    MODEL_035_TENT,
     MODEL_173_2,
+    MODEL_SCP_049,
     __MODEL_LAST
 } ModelsEnum;
 
@@ -25,6 +26,7 @@ class ModelViewer
     private:
         std::unique_ptr<Renderer> renderer;
         std::unique_ptr<Input> input;
+        std::unordered_map<int, int> anims_count_from_model;
 };
 
 #endif

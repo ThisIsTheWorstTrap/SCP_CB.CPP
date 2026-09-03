@@ -75,3 +75,8 @@ float RaylibRenderer::get_model_height(int model_id)
     BoundingBox bbox = ::GetModelBoundingBox(models[model_id]);
     return bbox.max.y - bbox.min.y;
 }
+
+void RaylibRenderer::play_selected_animation(int model_id, int anim_num, float frame)
+{
+    ::UpdateModelAnimation(models[model_id], *model_animations[anim_num], frame);
+}
