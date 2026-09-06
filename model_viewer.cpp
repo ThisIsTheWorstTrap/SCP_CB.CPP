@@ -17,8 +17,7 @@ void ModelViewer::load_models(std::string models_folder_path)
 {
     std::string model_names[] = {
         "035",
-        "035tentacle",
-        "173_2"
+        "173_2",
         "scp-049"
     };
 
@@ -34,6 +33,11 @@ void ModelViewer::load_models(std::string models_folder_path)
 void ModelViewer::add_model(ModelsEnum model)
 {
     renderer->add_model_scene((int)model, Engine::Coordinates(0, 0, 0));
+}
+
+void ModelViewer::run_animation(int model_id, int anim_num, float frame)
+{
+    renderer->play_selected_animation(model_id, anim_num, frame);
 }
 
 void ModelViewer::run()
@@ -52,6 +56,9 @@ void ModelViewer::run()
 
     bool drop_down_edit_mode = false;
     int drop_down_active = 0;
+
+    bool is_anim_active = true;
+    float frame;
 
     while (!renderer->window_should_close())
     {
@@ -144,6 +151,11 @@ void ModelViewer::run()
 
         renderer->begin_frame();
         add_model((ModelsEnum)drop_down_active);
+        if (is_anim_active)
+        {
+            frame += renderer->get_delta_time()*60; // temporary because framerate can be different
+            run_animation(drop_down_active, 0, frame);
+        }
         renderer->end_frame();
     }
 }
