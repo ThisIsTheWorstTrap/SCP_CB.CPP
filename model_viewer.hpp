@@ -1,8 +1,7 @@
 #ifndef MODEL_VIEWER_HPP
 #define MODEL_VIEWER_HPP
 
-#include "engine/renderer/Renderer.hpp"
-#include "engine/input/Input.hpp"
+#include "engine/engine.hpp"
 #include <unordered_map>
 
 typedef enum
