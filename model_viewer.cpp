@@ -17,13 +17,11 @@ void ModelViewer::load_models(std::string models_folder_path)
 {
     std::string model_names[] = {
         "035",
-        "173_2",
-        "scp-049"
     };
 
     for (int i=0; i<__MODEL_LAST; i++)
     {
-        std::string model_path = models_folder_path + model_names[i] + ".glb";
+        std::string model_path = models_folder_path + model_names[i] + ".m3d";
         int anim_num = 0;
         renderer->load_model_anims(model_path.c_str(), (ModelsEnum)i, &anim_num);
         anims_count_from_model[i] = anim_num;
@@ -37,7 +35,7 @@ void ModelViewer::add_model(ModelsEnum model)
 
 void ModelViewer::run_animation(int model_id, int anim_num, float frame)
 {
-    renderer->play_selected_animation(model_id, anim_num, frame);
+    if (anims_count_from_model[model_id] > 0) renderer->play_selected_animation(model_id, anim_num, frame);
 }
 
 void ModelViewer::run()
@@ -57,7 +55,7 @@ void ModelViewer::run()
     bool drop_down_edit_mode = false;
     int drop_down_active = 0;
 
-    bool is_anim_active = true;
+    bool is_anim_active = false;
     float frame;
 
     while (!renderer->window_should_close())
@@ -66,7 +64,7 @@ void ModelViewer::run()
 
         
         if (GuiDropdownBox((Rectangle){ 100, 80, 200, 30 },
-                           "MODEL_035;MODEL_035_TENT;MODEL_173_2",
+                           "MODEL_035;MODEL_173_2;MODEL_049",
                            &drop_down_active, drop_down_edit_mode))
         {
             drop_down_edit_mode = !drop_down_edit_mode;
