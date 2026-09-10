@@ -14,10 +14,25 @@
 
 Go to Edit -> Preferences -> Add-ons -> Install from disk and then select your extensions
 
-# 4 : export the model
+# 4 : transform the model
 
 First, you need to import the .b3d model : go to File -> Import.
-Then, you need to check if textures are found : go to Shading, and if textures are set, you're good to go
+Then, you need to check if textures are found : go to Shading, and click on the model : some box should appear on the bottom
+Then, find the texture in these box : if the texture is a png, don't change it. Else, use GIMP to change the format to png
+Then, go to UV Editing : if the UV are correctly mapped on the texture, then you're good
+Else, you need to go to Scripting, then select the model and click new scrpit and write this python script : ```import bpy
+
+obj = bpy.context.object
+mesh = obj.data
+attr = mesh.attributes['uvmap_render'] # Here, you might change the name of uvmap_render, based on what you see in UV Editing -> UV Maps
+
+for d in attr.data:
+    d.vector[1] = d.vector[1] % 1.0
+
+mesh.update()```
+
+
+
 Finally, go to File -> Export -> Model 3d (.m3d) and enable option ```Embed Assets```, it can be found on the right of the menu
 Then, export to the place you want (preferably into models)
 
