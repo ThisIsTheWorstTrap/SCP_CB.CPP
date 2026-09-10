@@ -6,8 +6,6 @@
 
 typedef enum
 {
-    MODEL_035,
-    MODEL_173_2,
     MODEL_SCP_049,
     __MODEL_LAST
 } ModelsEnum;

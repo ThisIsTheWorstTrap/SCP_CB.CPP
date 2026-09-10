@@ -16,7 +16,7 @@ ModelViewer::ModelViewer(std::string path)
 void ModelViewer::load_models(std::string models_folder_path)
 {
     std::string model_names[] = {
-        "035",
+        "Untitled",
     };
 
     for (int i=0; i<__MODEL_LAST; i++)
@@ -64,7 +64,7 @@ void ModelViewer::run()
 
         
         if (GuiDropdownBox((Rectangle){ 100, 80, 200, 30 },
-                           "MODEL_035;MODEL_173_2;MODEL_049",
+                           "MODEL_UNTILTED",
                            &drop_down_active, drop_down_edit_mode))
         {
             drop_down_edit_mode = !drop_down_edit_mode;
@@ -151,7 +151,7 @@ void ModelViewer::run()
         add_model((ModelsEnum)drop_down_active);
         if (is_anim_active)
         {
-            frame += renderer->get_delta_time()*60; // temporary because framerate can be different
+            frame += 1;
             run_animation(drop_down_active, 0, frame);
         }
         renderer->end_frame();

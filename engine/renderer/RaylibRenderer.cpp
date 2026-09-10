@@ -34,7 +34,7 @@ float RaylibRenderer::get_delta_time()
 void RaylibRenderer::begin_frame()
 {
     BeginDrawing();
-    ClearBackground(BLACK);
+    ClearBackground(WHITE);
     BeginMode3D(camera); 
 }
 
@@ -58,10 +58,20 @@ void RaylibRenderer::load_model_anims(const char* path, int model_id, int* anim_
 {
     Model model = ::LoadModel(path);
     models[model_id] = model;
+    for (int i = 0; i < model.materialCount; i++)
+        model.materials[i].maps[MATERIAL_MAP_DIFFUSE].color = WHITE;
 
     ModelAnimation* anim = ::LoadModelAnimations(path, anim_count);
+    TraceLog(LOG_INFO, "Anim count: %d", anim_count);
+
+    for (int i = 0; i < *anim_count; i++)
+    {
+        bool valid = IsModelAnimationValid(model, anim[i]);
+        TraceLog(LOG_INFO, "Anim %d - bone count: %d - valid: %d", i, anim[i].boneCount, valid);
+    }
     if (*anim_count > 0) model_animations[model_id] = anim;
 }
+
 
 void RaylibRenderer::add_model_scene(int model_id, Engine::Coordinates position)
 {
