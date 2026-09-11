@@ -8,6 +8,7 @@ void RaylibRenderer::init_window(int width, int height, const char* title)
 {
     SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(width, height, title);
+    SetTargetFPS(60); // Temporary
 
     camera.position = { 0.0f, 10.0f, 10.0f };
     camera.target   = { 0.0f, 0.0f, 0.0f };
@@ -20,37 +21,37 @@ void RaylibRenderer::close_window()
 {
     for (const auto& [num, animations]: model_animations)
     {
-        UnloadModelAnimations(animations, anims_count_from_model[num]);
+        ::UnloadModelAnimations(animations, anims_count_from_model[num]);
     }
     for (const auto& [model_id, model]: models)
     {
-        UnloadModel(model);
+        ::UnloadModel(model);
     }
     // TODO unload sounds
-    CloseWindow();
+    ::CloseWindow();
 }
 
 bool RaylibRenderer::window_should_close()
 {
-    return WindowShouldClose();
+    return ::WindowShouldClose();
 }
 
 float RaylibRenderer::get_delta_time()
 {
-    return GetFrameTime();
+    return ::GetFrameTime();
 }
 
 void RaylibRenderer::begin_frame()
 {
-    BeginDrawing();
-    ClearBackground(WHITE);
-    BeginMode3D(camera); 
+    ::BeginDrawing();
+    ::ClearBackground(WHITE);
+    ::BeginMode3D(camera); 
 }
 
 void RaylibRenderer::end_frame()
 {
-    EndMode3D();
-    EndDrawing();
+    ::EndMode3D();
+    ::EndDrawing();
 }
 
 void RaylibRenderer::set_camera_position(Engine::Coordinates position)
@@ -74,8 +75,8 @@ void RaylibRenderer::load_model_anims(const char* path, int model_id, int* anim_
 
     for (int i = 0; i < *anim_count; i++)
     {
-        bool valid = IsModelAnimationValid(model, anim[i]);
-        TraceLog(LOG_INFO, "Anim %d - bone count: %d - valid: %d", i, anim[i].boneCount, valid);
+        bool valid = ::IsModelAnimationValid(model, anim[i]);
+        ::TraceLog(LOG_INFO, "Anim %d - bone count: %d - valid: %d", i, anim[i].boneCount, valid);
     }
     if (*anim_count > 0) 
     {
@@ -98,10 +99,12 @@ float RaylibRenderer::get_model_height(int model_id)
     return bbox.max.y - bbox.min.y;
 }
 
-void RaylibRenderer::play_selected_animation(int model_id, int anim_num, float frame)
+void RaylibRenderer::play_selected_animation(int model_id, int anim_num, int frame)
 {
     if (anims_count_from_model[model_id] != 0)
+    {
         ::UpdateModelAnimation(models[model_id], *model_animations[anim_num], frame);
+    }
     else
-        TraceLog(LOG_ERROR, "You're trying to play a model (%d) that has no name", model_id);
+        ::TraceLog(LOG_ERROR, "You're trying to play a model (%d) that has no animation", model_id);
 }

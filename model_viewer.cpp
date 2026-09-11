@@ -54,7 +54,7 @@ void ModelViewer::run()
     bool drop_down_edit_mode = false;
     int drop_down_active = 0;
 
-    bool is_anim_active = false;
+    bool is_anim_active = true;
     float frame;
 
     while (!renderer->window_should_close())
@@ -151,7 +151,7 @@ void ModelViewer::run()
         if (is_anim_active)
         {
             frame += 1;
-            run_animation(drop_down_active, 0, frame);
+            run_animation(drop_down_active, 1, frame);
         }
         renderer->end_frame();
     }
