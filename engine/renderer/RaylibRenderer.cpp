@@ -6,6 +6,7 @@ RaylibRenderer::RaylibRenderer() : camera{}
 
 void RaylibRenderer::init_window(int width, int height, const char* title)
 {
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(width, height, title);
 
     camera.position = { 0.0f, 10.0f, 10.0f };
@@ -17,7 +18,15 @@ void RaylibRenderer::init_window(int width, int height, const char* title)
 
 void RaylibRenderer::close_window()
 {
-    // TODO unload models and sounds...
+    for (const auto& [num, animations]: model_animations)
+    {
+        UnloadModelAnimations(animations, anims_count_from_model[num]);
+    }
+    for (const auto& [model_id, model]: models)
+    {
+        UnloadModel(model);
+    }
+    // TODO unload sounds
     CloseWindow();
 }
 
@@ -62,14 +71,17 @@ void RaylibRenderer::load_model_anims(const char* path, int model_id, int* anim_
         model.materials[i].maps[MATERIAL_MAP_DIFFUSE].color = WHITE;
 
     ModelAnimation* anim = ::LoadModelAnimations(path, anim_count);
-    TraceLog(LOG_INFO, "Anim count: %d", anim_count);
 
     for (int i = 0; i < *anim_count; i++)
     {
         bool valid = IsModelAnimationValid(model, anim[i]);
         TraceLog(LOG_INFO, "Anim %d - bone count: %d - valid: %d", i, anim[i].boneCount, valid);
     }
-    if (*anim_count > 0) model_animations[model_id] = anim;
+    if (*anim_count > 0) 
+    {
+        model_animations[model_id] = anim;
+        anims_count_from_model[model_id] = *anim_count;
+    }
 }
 
 
@@ -88,5 +100,8 @@ float RaylibRenderer::get_model_height(int model_id)
 
 void RaylibRenderer::play_selected_animation(int model_id, int anim_num, float frame)
 {
-    ::UpdateModelAnimation(models[model_id], *model_animations[anim_num], frame);
+    if (anims_count_from_model[model_id] != 0)
+        ::UpdateModelAnimation(models[model_id], *model_animations[anim_num], frame);
+    else
+        TraceLog(LOG_ERROR, "You're trying to play a model (%d) that has no name", model_id);
 }

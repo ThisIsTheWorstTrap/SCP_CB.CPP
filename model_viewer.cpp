@@ -24,7 +24,6 @@ void ModelViewer::load_models(std::string models_folder_path)
         std::string model_path = models_folder_path + model_names[i] + ".m3d";
         int anim_num = 0;
         renderer->load_model_anims(model_path.c_str(), (ModelsEnum)i, &anim_num);
-        anims_count_from_model[i] = anim_num;
     }
 }
 
@@ -35,7 +34,7 @@ void ModelViewer::add_model(ModelsEnum model)
 
 void ModelViewer::run_animation(int model_id, int anim_num, float frame)
 {
-    if (anims_count_from_model[model_id] > 0) renderer->play_selected_animation(model_id, anim_num, frame);
+    renderer->play_selected_animation(model_id, anim_num, frame);
 }
 
 void ModelViewer::run()

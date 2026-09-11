@@ -24,7 +24,6 @@ class ModelViewer
     private:
         std::unique_ptr<Renderer> renderer;
         std::unique_ptr<Input> input;
-        std::unordered_map<int, int> anims_count_from_model;
 };
 
 #endif

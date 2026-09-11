@@ -33,6 +33,7 @@ class RaylibRenderer : public Renderer
         Camera3D camera;
         std::unordered_map<int, Model> models;
         std::unordered_map<int, ModelAnimation*> model_animations;
+        std::unordered_map<int, int> anims_count_from_model;
 };
 
 #endif
