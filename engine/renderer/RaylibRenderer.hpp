@@ -4,6 +4,7 @@
 #include "Renderer.hpp"
 #include <raylib.h>
 #include <unordered_map>
+#include <vector>
 #include <string>
 
 class RaylibRenderer : public Renderer
@@ -22,6 +23,8 @@ class RaylibRenderer : public Renderer
 
         void set_camera_position(Engine::Coordinates position) override;
         void set_camera_target(Engine::Coordinates target) override;
+
+        std::vector<std::string> get_models_from_folder(std::string folder) override;
 
         void load_model_anims(const char* path, int id, int* anim_count) override;
         void add_model_scene(int model_id, Engine::Coordinates position) override;

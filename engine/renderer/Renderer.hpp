@@ -4,6 +4,7 @@
 #include "engine/core/math/math.hpp"
 #include "color.hpp"
 #include <memory>
+#include <vector>
 #include <string>
 
 class Renderer
@@ -22,6 +23,8 @@ class Renderer
 
         virtual void set_camera_position(Engine::Coordinates position) = 0;
         virtual void set_camera_target(Engine::Coordinates target) = 0;
+        
+        virtual std::vector<std::string> get_models_from_folder(std::string folder) = 0;
 
         virtual void load_model_anims(const char* path, int id, int* anim_count) = 0;
         virtual void add_model_scene(int model_id, Engine::Coordinates position) = 0;

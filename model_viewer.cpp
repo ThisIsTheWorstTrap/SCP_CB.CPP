@@ -1,6 +1,7 @@
 #include "model_viewer.hpp"
 #include <string>
 #include <iostream>
+#include <vector>
 
 #define RAYGUI_IMPLEMENTATION
 #include "lib/raygui.h"
@@ -13,15 +14,25 @@ ModelViewer::ModelViewer(std::string path)
     load_models(path);
 }
 
+std::string ModelViewer::transform_vector_of_models(std::string models_folder_path)
+{
+    std::vector<std::string> files = renderer->get_models_from_folder(models_folder_path);
+
+    std::string to_return = "";
+    for (long unsigned int i = 0; i<files.size(); i++)
+    {
+        to_return += files[i] + ";";
+    }
+    return to_return;
+}
+
 void ModelViewer::load_models(std::string models_folder_path)
 {
-    std::string model_names[] = {
-        "Untitled",
-    };
+    std::vector<std::string> files = renderer->get_models_from_folder(models_folder_path);
 
-    for (int i=0; i<__MODEL_LAST; i++)
+    for (long unsigned int i=0; i<files.size(); i++)
     {
-        std::string model_path = models_folder_path + model_names[i] + ".m3d";
+        std::string model_path = files[i];
         int anim_num = 0;
         renderer->load_model_anims(model_path.c_str(), (ModelsEnum)i, &anim_num);
     }
@@ -37,7 +48,7 @@ void ModelViewer::run_animation(int model_id, int anim_num, int frame)
     renderer->play_selected_animation(model_id, anim_num, frame);
 }
 
-void ModelViewer::run()
+void ModelViewer::run(std::string path)
 {
     Engine::Coordinates camera_position(0.0f, 2.0f, 5.0f);
     float yaw = 3.14159265f; // face -Z
@@ -64,9 +75,9 @@ void ModelViewer::run()
     {
         float delta_time = renderer->get_delta_time();
 
-        
+        std::string model_names = transform_vector_of_models(path);
         if (GuiDropdownBox((Rectangle){ 100, 80, 200, 30 },
-                           "MODEL_UNTILTED",
+                           model_names.c_str(),
                            &drop_down_active, drop_down_edit_mode))
         {
             drop_down_edit_mode = !drop_down_edit_mode;

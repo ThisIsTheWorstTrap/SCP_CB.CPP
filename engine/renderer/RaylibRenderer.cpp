@@ -1,4 +1,5 @@
 #include "RaylibRenderer.hpp"
+#include <filesystem>
 
 RaylibRenderer::RaylibRenderer() : camera{}
 {
@@ -64,6 +65,20 @@ void RaylibRenderer::set_camera_target(Engine::Coordinates target)
     camera.target = Vector3{target.get_x(), target.get_y(), target.get_z()};
 }
 
+namespace fs = std::filesystem;
+
+std::vector<std::string> RaylibRenderer::get_models_from_folder(std::string folder)
+{
+    std::vector<std::string> files;
+    for (const auto& entry : fs::recursive_directory_iterator(folder))
+    {
+        if (entry.is_regular_file() && entry.path().extension() == ".m3d") {
+            files.push_back(entry.path().string());
+        }
+    }
+    return files;
+}
+
 void RaylibRenderer::load_model_anims(const char* path, int model_id, int* anim_count)
 {
     Model model = ::LoadModel(path);
@@ -73,11 +88,6 @@ void RaylibRenderer::load_model_anims(const char* path, int model_id, int* anim_
 
     ModelAnimation* anim = ::LoadModelAnimations(path, anim_count);
 
-    for (int i = 0; i < *anim_count; i++)
-    {
-        bool valid = ::IsModelAnimationValid(model, anim[i]);
-        ::TraceLog(LOG_INFO, "Anim %d - bone count: %d - valid: %d", i, anim[i].boneCount, valid);
-    }
     if (*anim_count > 0) 
     {
         model_animations[model_id] = anim;
