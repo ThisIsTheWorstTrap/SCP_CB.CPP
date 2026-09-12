@@ -12,6 +12,7 @@ ModelViewer::ModelViewer(std::string path)
     this->input = CreateInput();
     renderer->init_window(1280, 720, "SCP Remake");
     load_models(path);
+    run(path);
 }
 
 std::string ModelViewer::transform_vector_of_models(std::string models_folder_path)
@@ -76,7 +77,7 @@ void ModelViewer::run(std::string path)
         float delta_time = renderer->get_delta_time();
 
         std::string model_names = transform_vector_of_models(path);
-        if (GuiDropdownBox((Rectangle){ 100, 80, 200, 30 },
+        if (GuiDropdownBox((Rectangle){ 100, 80, 500, 30 },
                            model_names.c_str(),
                            &drop_down_active, drop_down_edit_mode))
         {
@@ -85,7 +86,7 @@ void ModelViewer::run(std::string path)
         }
 
         std::string anims_name = renderer->get_animations_name(drop_down_active);
-        if (GuiDropdownBox((Rectangle){ 500, 80, 200, 30 },
+        if (GuiDropdownBox((Rectangle){ 1000, 80, 200, 30 },
                            anims_name.c_str(),
                            &anim_drop_down_active, anim_drop_down_edit_mode))
         {
