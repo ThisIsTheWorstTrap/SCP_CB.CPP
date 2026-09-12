@@ -29,6 +29,7 @@ class Renderer
         virtual float get_model_height(int model_id) = 0;
 
         virtual void play_selected_animation(int model_id, int anim_num, int frame) = 0;
+        virtual std::string get_animations_name(int model_id) = 0;
 };
 
 std::unique_ptr<Renderer> CreateRenderer();

@@ -4,6 +4,7 @@
 #include "Renderer.hpp"
 #include <raylib.h>
 #include <unordered_map>
+#include <string>
 
 class RaylibRenderer : public Renderer
 {
@@ -28,6 +29,7 @@ class RaylibRenderer : public Renderer
         float get_model_height(int model_id) override;
 
         void play_selected_animation(int model_id, int anim_num, int frame) override;
+        std::string get_animations_name(int model_id) override;
 
     private:
         Camera3D camera;

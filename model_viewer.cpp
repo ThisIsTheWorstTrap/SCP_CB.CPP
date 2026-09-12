@@ -73,8 +73,9 @@ void ModelViewer::run()
             camera_fitted = !camera_fitted;
         }
 
+        std::string anims_name = renderer->get_animations_name(drop_down_active);
         if (GuiDropdownBox((Rectangle){ 500, 80, 200, 30 },
-                           "0;1;2",
+                           anims_name.c_str(),
                            &anim_drop_down_active, anim_drop_down_edit_mode))
         {
             anim_drop_down_edit_mode = !anim_drop_down_edit_mode;

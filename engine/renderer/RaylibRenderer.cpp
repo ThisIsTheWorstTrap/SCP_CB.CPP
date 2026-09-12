@@ -108,3 +108,14 @@ void RaylibRenderer::play_selected_animation(int model_id, int anim_num, int fra
     else
         ::TraceLog(LOG_ERROR, "You're trying to play a model (%d) that has no animation", model_id);
 }
+
+std::string RaylibRenderer::get_animations_name(int model_id)
+{
+    std::string result;
+    for (int i = 0; i < anims_count_from_model[model_id]; i++)
+    {
+        result += model_animations[model_id][i].name;
+        result += ";";
+    }
+    return result;
+}
