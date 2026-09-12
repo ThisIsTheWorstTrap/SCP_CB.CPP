@@ -32,7 +32,7 @@ void ModelViewer::add_model(ModelsEnum model)
     renderer->add_model_scene((int)model, Engine::Coordinates(0, 0, 0));
 }
 
-void ModelViewer::run_animation(int model_id, int anim_num, float frame)
+void ModelViewer::run_animation(int model_id, int anim_num, int frame)
 {
     renderer->play_selected_animation(model_id, anim_num, frame);
 }
@@ -54,8 +54,11 @@ void ModelViewer::run()
     bool drop_down_edit_mode = false;
     int drop_down_active = 0;
 
+    bool anim_drop_down_edit_mode = false;
+    int anim_drop_down_active = 0;
+
     bool is_anim_active = true;
-    float frame;
+    int frame;
 
     while (!renderer->window_should_close())
     {
@@ -69,7 +72,13 @@ void ModelViewer::run()
             drop_down_edit_mode = !drop_down_edit_mode;
             camera_fitted = !camera_fitted;
         }
-        
+
+        if (GuiDropdownBox((Rectangle){ 500, 80, 200, 30 },
+                           "0;1;2",
+                           &anim_drop_down_active, anim_drop_down_edit_mode))
+        {
+            anim_drop_down_edit_mode = !anim_drop_down_edit_mode;
+        }
 
         if (input->is_mouse_button_down(Engine::MouseButton::Right))
         {
@@ -151,7 +160,7 @@ void ModelViewer::run()
         if (is_anim_active)
         {
             frame += 1;
-            run_animation(drop_down_active, 1, frame);
+            run_animation(drop_down_active, anim_drop_down_active, frame);
         }
         renderer->end_frame();
     }

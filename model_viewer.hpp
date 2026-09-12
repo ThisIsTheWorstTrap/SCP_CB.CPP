@@ -17,7 +17,7 @@ class ModelViewer
 
         void load_models(std::string path);
         void add_model(ModelsEnum model);
-        void run_animation(int model_id, int anim_num, float frame);
+        void run_animation(int model_id, int anim_num, int frame);
         
         void run();
 

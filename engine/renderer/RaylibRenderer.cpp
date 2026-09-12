@@ -81,10 +81,9 @@ void RaylibRenderer::load_model_anims(const char* path, int model_id, int* anim_
     if (*anim_count > 0) 
     {
         model_animations[model_id] = anim;
-        anims_count_from_model[model_id] = *anim_count;
     }
+    anims_count_from_model[model_id] = *anim_count;
 }
-
 
 void RaylibRenderer::add_model_scene(int model_id, Engine::Coordinates position)
 {
@@ -101,9 +100,10 @@ float RaylibRenderer::get_model_height(int model_id)
 
 void RaylibRenderer::play_selected_animation(int model_id, int anim_num, int frame)
 {
-    if (anims_count_from_model[model_id] != 0)
+    int model_anim_count = anims_count_from_model[model_id];
+    if (model_anim_count > 0 && model_anim_count > anim_num)
     {
-        ::UpdateModelAnimation(models[model_id], *model_animations[anim_num], frame);
+        ::UpdateModelAnimation(models[model_id], model_animations[model_id][anim_num], frame);
     }
     else
         ::TraceLog(LOG_ERROR, "You're trying to play a model (%d) that has no animation", model_id);
