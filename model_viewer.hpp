@@ -4,12 +4,6 @@
 #include "engine/engine.hpp"
 #include <unordered_map>
 
-typedef enum
-{
-    MODEL_SCP_049,
-    __MODEL_LAST
-} ModelsEnum;
-
 class ModelViewer
 {
     public:
@@ -18,7 +12,7 @@ class ModelViewer
         std::string transform_vector_of_models(std::string models_folder_path);
 
         void load_models(std::string path);
-        void add_model(ModelsEnum model);
+        void add_model(int model);
         void run_animation(int model_id, int anim_num, int frame);
         
         void run(std::string path);

@@ -33,6 +33,7 @@ class RaylibRenderer : public Renderer
 
         void play_selected_animation(int model_id, int anim_num, int frame) override;
         std::string get_animations_name(int model_id) override;
+        int get_animations_num(int model_id) override;
 
     private:
         Camera3D camera;

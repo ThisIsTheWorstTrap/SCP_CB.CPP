@@ -129,3 +129,8 @@ std::string RaylibRenderer::get_animations_name(int model_id)
     }
     return result;
 }
+
+int RaylibRenderer::get_animations_num(int model_id)
+{
+    return anims_count_from_model[model_id];
+}

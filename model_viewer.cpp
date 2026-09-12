@@ -35,11 +35,11 @@ void ModelViewer::load_models(std::string models_folder_path)
     {
         std::string model_path = files[i];
         int anim_num = 0;
-        renderer->load_model_anims(model_path.c_str(), (ModelsEnum)i, &anim_num);
+        renderer->load_model_anims(model_path.c_str(), i, &anim_num);
     }
 }
 
-void ModelViewer::add_model(ModelsEnum model)
+void ModelViewer::add_model(int model)
 {
     renderer->add_model_scene((int)model, Engine::Coordinates(0, 0, 0));
 }
@@ -169,8 +169,8 @@ void ModelViewer::run(std::string path)
         );
 
         renderer->begin_frame();
-        add_model((ModelsEnum)drop_down_active);
-        if (is_anim_active)
+        add_model(drop_down_active);
+        if (is_anim_active && renderer->get_animations_num(drop_down_active) > 0)
         {
             frame += 1;
             run_animation(drop_down_active, anim_drop_down_active, frame);
