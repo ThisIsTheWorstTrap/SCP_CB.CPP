@@ -20,7 +20,8 @@ First, you need to import the .b3d model : go to File -> Import.
 Then, you need to check if textures are found : go to Shading, and click on the model : some box should appear on the bottom
 Then, find the texture in these box : if the texture is a png, don't change it. Else, use GIMP to change the format to png
 Then, go to UV Editing : if the UV are correctly mapped on the texture, then you're good
-Else, you need to go to Scripting, then select the model and click new scrpit and write this python script : ```import bpy
+Else, you need to go to Scripting, then select the model and click new scrpit and write this python script : 
+```import bpy
 
 obj = bpy.context.object
 mesh = obj.data
