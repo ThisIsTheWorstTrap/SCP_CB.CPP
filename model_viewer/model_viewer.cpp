@@ -1,0 +1,180 @@
+#include "model_viewer.hpp"
+#include <string>
+#include <iostream>
+#include <vector>
+
+#define RAYGUI_IMPLEMENTATION
+#include "lib/raygui.h"
+
+ModelViewer::ModelViewer(std::string path)
+{
+    this->renderer = CreateRenderer();
+    this->input = CreateInput();
+    renderer->init_window(1280, 720, "SCP Remake");
+    load_models(path);
+    run(path);
+}
+
+std::string ModelViewer::transform_vector_of_models(std::string models_folder_path)
+{
+    std::vector<std::string> files = renderer->get_models_from_folder(models_folder_path);
+
+    std::string to_return = "";
+    for (long unsigned int i = 0; i<files.size(); i++)
+    {
+        to_return += files[i] + ";";
+    }
+    return to_return;
+}
+
+void ModelViewer::load_models(std::string models_folder_path)
+{
+    std::vector<std::string> files = renderer->get_models_from_folder(models_folder_path);
+
+    for (long unsigned int i=0; i<files.size(); i++)
+    {
+        std::string model_path = files[i];
+        int anim_num = 0;
+        renderer->load_model_anims(model_path.c_str(), i, &anim_num);
+    }
+}
+
+void ModelViewer::add_model(int model)
+{
+    renderer->add_model_scene((int)model, Engine::Coordinates(0, 0, 0));
+}
+
+void ModelViewer::run_animation(int model_id, int anim_num, int frame)
+{
+    renderer->play_selected_animation(model_id, anim_num, frame);
+}
+
+void ModelViewer::run(std::string path)
+{
+    Engine::Coordinates camera_position(0.0f, 2.0f, 5.0f);
+    float yaw = 3.14159265f; // face -Z
+    float pitch = 0.0f;
+
+    const float move_speed = 10.0f;
+    const float mouse_sensitivity = 0.003f;
+
+    bool cursor_currently_hidden = true;
+    input->switch_cursor();
+
+    bool camera_fitted = false;
+
+    bool drop_down_edit_mode = false;
+    int drop_down_active = 0;
+
+    bool anim_drop_down_edit_mode = false;
+    int anim_drop_down_active = 0;
+
+    bool is_anim_active = true;
+    int frame;
+
+    while (!renderer->window_should_close())
+    {
+        float delta_time = renderer->get_delta_time();
+
+        std::string model_names = transform_vector_of_models(path);
+        if (GuiDropdownBox((Rectangle){ 100, 80, 500, 30 },
+                           model_names.c_str(),
+                           &drop_down_active, drop_down_edit_mode))
+        {
+            drop_down_edit_mode = !drop_down_edit_mode;
+            camera_fitted = !camera_fitted;
+        }
+
+        std::string anims_name = renderer->get_animations_name(drop_down_active);
+        if (GuiDropdownBox((Rectangle){ 1000, 80, 200, 30 },
+                           anims_name.c_str(),
+                           &anim_drop_down_active, anim_drop_down_edit_mode))
+        {
+            anim_drop_down_edit_mode = !anim_drop_down_edit_mode;
+        }
+
+        if (input->is_mouse_button_down(Engine::MouseButton::Right))
+        {
+            cursor_currently_hidden = !cursor_currently_hidden;
+            input->switch_cursor();
+        }
+
+        if (cursor_currently_hidden)
+        {
+            Engine::Coordinates2d mouse_delta =
+                input->get_mouse_delta();
+
+            yaw   -= mouse_delta.get_x() * mouse_sensitivity;
+            pitch -= mouse_delta.get_y() * mouse_sensitivity;
+
+            if (pitch > 1.5f)
+                pitch = 1.5f;
+
+            if (pitch < -1.5f)
+                pitch = -1.5f;
+        }
+
+        if (!camera_fitted)
+        {
+            float model_height =
+                renderer->get_model_height(drop_down_active);
+
+            if (model_height > 0.0f)
+            {
+                const float fovy = 45.0f;
+                const float fov_rad =
+                    fovy * (3.14159265f / 180.0f);
+
+                float distance =
+                    (model_height * 0.5f) /
+                    tanf(fov_rad * 0.5f);
+
+                distance *= 1.3f;
+
+                float center = model_height * 0.5f;
+
+                camera_position =
+                    Engine::Coordinates(
+                        0.0f,
+                        center,
+                        distance
+                    );
+
+                yaw = 3.14159265f;
+                pitch = 0.0f;
+
+                camera_fitted = true;
+            }
+        }
+
+        Engine::Coordinates forward(
+            cosf(pitch) * sinf(yaw),
+            sinf(pitch),
+            cosf(pitch) * cosf(yaw)
+        );
+
+        Engine::Coordinates up(0.0f, 1.0f, 0.0f);
+
+        Engine::Coordinates right =
+            forward.cross(up).normalized();
+
+        if (input->is_key_down(Key::W)) camera_position += forward * (move_speed * delta_time);
+        if (input->is_key_down(Key::S)) camera_position += forward * (-move_speed * delta_time);
+        if (input->is_key_down(Key::D)) camera_position += right * (move_speed * delta_time);
+        if (input->is_key_down(Key::A)) camera_position += right * (-move_speed * delta_time);
+
+        renderer->set_camera_position(camera_position);
+        renderer->set_camera_target(
+            camera_position + forward
+        );
+
+        renderer->begin_frame();
+        add_model(drop_down_active);
+        if (is_anim_active && renderer->get_animations_num(drop_down_active) > 0)
+        {
+            frame += 1;
+            run_animation(drop_down_active, anim_drop_down_active, frame);
+        }
+        renderer->end_frame();
+    }
+}

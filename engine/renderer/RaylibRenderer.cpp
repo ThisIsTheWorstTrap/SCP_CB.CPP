@@ -1,4 +1,5 @@
 #include "RaylibRenderer.hpp"
+#include <filesystem>
 
 RaylibRenderer::RaylibRenderer() : camera{}
 {
@@ -6,7 +7,9 @@ RaylibRenderer::RaylibRenderer() : camera{}
 
 void RaylibRenderer::init_window(int width, int height, const char* title)
 {
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(width, height, title);
+    SetTargetFPS(60); // Temporary
 
     camera.position = { 0.0f, 10.0f, 10.0f };
     camera.target   = { 0.0f, 0.0f, 0.0f };
@@ -17,36 +20,39 @@ void RaylibRenderer::init_window(int width, int height, const char* title)
 
 void RaylibRenderer::close_window()
 {
-    for (Texture2D& texture : textures)
-        UnloadTexture(texture);
-
-    for (Model& model : models)
-        UnloadModel(model);
-
-    CloseWindow();
+    for (const auto& [num, animations]: model_animations)
+    {
+        ::UnloadModelAnimations(animations, anims_count_from_model[num]);
+    }
+    for (const auto& [model_id, model]: models)
+    {
+        ::UnloadModel(model);
+    }
+    // TODO unload sounds
+    ::CloseWindow();
 }
 
 bool RaylibRenderer::window_should_close()
 {
-    return WindowShouldClose();
+    return ::WindowShouldClose();
 }
 
 float RaylibRenderer::get_delta_time()
 {
-    return GetFrameTime();
+    return ::GetFrameTime();
 }
 
 void RaylibRenderer::begin_frame()
 {
-    BeginDrawing();
-    ClearBackground(BLACK);
-    BeginMode3D(camera);
+    ::BeginDrawing();
+    ::ClearBackground(WHITE);
+    ::BeginMode3D(camera); 
 }
 
 void RaylibRenderer::end_frame()
 {
-    EndMode3D();
-    EndDrawing();
+    ::EndMode3D();
+    ::EndDrawing();
 }
 
 void RaylibRenderer::set_camera_position(Engine::Coordinates position)
@@ -59,50 +65,72 @@ void RaylibRenderer::set_camera_target(Engine::Coordinates target)
     camera.target = Vector3{target.get_x(), target.get_y(), target.get_z()};
 }
 
-void RaylibRenderer::draw_cube(Engine::Coordinates position, float size, Engine::Color color)
-{
-    Vector3 pos = { position.get_x(), position.get_y(), position.get_z() };
-    ::Color rl_color = { color.r, color.g, color.b, color.a };
+namespace fs = std::filesystem;
 
-    ::DrawCube(pos, size, size, size, rl_color);
+std::vector<std::string> RaylibRenderer::get_models_from_folder(std::string folder)
+{
+    std::vector<std::string> files;
+    for (const auto& entry : fs::recursive_directory_iterator(folder))
+    {
+        if (entry.is_regular_file() && entry.path().extension() == ".m3d") {
+            files.push_back(entry.path().string());
+        }
+    }
+    return files;
 }
 
-Engine::TextureHandle RaylibRenderer::load_texture(const char* path)
-{
-    Texture2D texture = ::LoadTexture(path);
-    textures.push_back(texture);
-
-    std::int32_t id = static_cast<std::int32_t>(textures.size() - 1);
-    return Engine::TextureHandle(id);
-}
-
-Engine::ModelHandle RaylibRenderer::load_model(const char* path)
+void RaylibRenderer::load_model_anims(const char* path, int model_id, int* anim_count)
 {
     Model model = ::LoadModel(path);
-    models.push_back(model);
+    models[model_id] = model;
+    for (int i = 0; i < model.materialCount; i++)
+        model.materials[i].maps[MATERIAL_MAP_DIFFUSE].color = WHITE;
 
-    std::int32_t id = static_cast<std::int32_t>(models.size() - 1);
-    return Engine::ModelHandle(id);
+    ModelAnimation* anim = ::LoadModelAnimations(path, anim_count);
+
+    if (*anim_count > 0) 
+    {
+        model_animations[model_id] = anim;
+    }
+    anims_count_from_model[model_id] = *anim_count;
 }
 
-void RaylibRenderer::draw_model(Engine::ModelHandle handle, Engine::Coordinates position, float scale)
+void RaylibRenderer::add_model_scene(int model_id, Engine::Coordinates position)
 {
-    if (!handle.is_valid())
-        return;
-
-    Model& model = models[handle.get_id()];
+    Model& model = models[model_id];
     Vector3 pos = { position.get_x(), position.get_y(), position.get_z() };
-
-    ::DrawModel(model, pos, scale, WHITE);
+    ::DrawModel(model, pos, 1.0f, WHITE);
 }
 
-void RaylibRenderer::set_model_texture(Engine::ModelHandle model_handle, Engine::TextureHandle texture_handle)
+float RaylibRenderer::get_model_height(int model_id)
 {
-    if (!model_handle.is_valid() || !texture_handle.is_valid())
-        return;
+    BoundingBox bbox = ::GetModelBoundingBox(models[model_id]);
+    return bbox.max.y - bbox.min.y;
+}
 
-    Model& model = models[model_handle.get_id()];
-    Texture2D& texture = textures[texture_handle.get_id()];
+void RaylibRenderer::play_selected_animation(int model_id, int anim_num, int frame)
+{
+    int model_anim_count = anims_count_from_model[model_id];
+    if (model_anim_count > 0 && model_anim_count > anim_num)
+    {
+        ::UpdateModelAnimation(models[model_id], model_animations[model_id][anim_num], frame);
+    }
+    else
+        ::TraceLog(LOG_ERROR, "You're trying to play a model (%d) that has no animation", model_id);
+}
 
-    SetMaterialTexture(&model.materials[0], MATERIAL_MAP_DIFFUSE, texture);
+std::string RaylibRenderer::get_animations_name(int model_id)
+{
+    std::string result;
+    for (int i = 0; i < anims_count_from_model[model_id]; i++)
+    {
+        result += model_animations[model_id][i].name;
+        result += ";";
+    }
+    return result;
+}
+
+int RaylibRenderer::get_animations_num(int model_id)
+{
+    return anims_count_from_model[model_id];
 }

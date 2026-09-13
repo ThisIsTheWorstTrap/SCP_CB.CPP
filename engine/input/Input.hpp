@@ -18,7 +18,7 @@ class Input
         virtual bool is_mouse_button_down(Engine::MouseButton button) = 0;
         virtual Engine::Coordinates2d get_mouse_delta() = 0;
 
-        virtual void hide_cursor() = 0;
+        virtual void switch_cursor() = 0;
 };
 
 std::unique_ptr<Input> CreateInput();

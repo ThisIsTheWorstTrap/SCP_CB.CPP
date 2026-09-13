@@ -3,7 +3,9 @@
 
 #include "Renderer.hpp"
 #include <raylib.h>
+#include <unordered_map>
 #include <vector>
+#include <string>
 
 class RaylibRenderer : public Renderer
 {
@@ -22,17 +24,22 @@ class RaylibRenderer : public Renderer
         void set_camera_position(Engine::Coordinates position) override;
         void set_camera_target(Engine::Coordinates target) override;
 
-        void draw_cube(Engine::Coordinates position, float size, Engine::Color color) override;
+        std::vector<std::string> get_models_from_folder(std::string folder) override;
 
-        Engine::TextureHandle load_texture(const char* path) override;
-        Engine::ModelHandle load_model(const char* path) override;
-        void draw_model(Engine::ModelHandle handle, Engine::Coordinates position, float scale) override;
-        void set_model_texture(Engine::ModelHandle model_handle, Engine::TextureHandle texture_handle) override;
+        void load_model_anims(const char* path, int id, int* anim_count) override;
+        void add_model_scene(int model_id, Engine::Coordinates position) override;
+
+        float get_model_height(int model_id) override;
+
+        void play_selected_animation(int model_id, int anim_num, int frame) override;
+        std::string get_animations_name(int model_id) override;
+        int get_animations_num(int model_id) override;
 
     private:
         Camera3D camera;
-        std::vector<Model> models;
-        std::vector<Texture2D> textures;
+        std::unordered_map<int, Model> models;
+        std::unordered_map<int, ModelAnimation*> model_animations;
+        std::unordered_map<int, int> anims_count_from_model;
 };
 
 #endif

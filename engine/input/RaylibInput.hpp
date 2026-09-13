@@ -18,7 +18,7 @@ class RaylibInput : public Input
         bool is_mouse_button_down(Engine::MouseButton button) override;
         Engine::Coordinates2d get_mouse_delta() override;
 
-        void hide_cursor() override;
+        void switch_cursor() override;
 
     private:
         static int to_raylib_key(Key key);
