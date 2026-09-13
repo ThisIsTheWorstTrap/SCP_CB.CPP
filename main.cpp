@@ -1,4 +1,4 @@
-#include "model_viewer.hpp"
+#include "model_viewer/model_viewer.hpp"
 #include <string>
 
 int main(int argc, char** argv)
