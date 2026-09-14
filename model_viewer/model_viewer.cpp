@@ -82,6 +82,7 @@ void ModelViewer::run(std::string path)
                            &drop_down_active, drop_down_edit_mode))
         {
             drop_down_edit_mode = !drop_down_edit_mode;
+            anim_drop_down_active = 0;
             camera_fitted = !camera_fitted;
         }
 
