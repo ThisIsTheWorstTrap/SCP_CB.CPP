@@ -31,11 +31,12 @@ attr = mesh.attributes['uvmap_render'] # Here, you might change the name of uvma
 for d in attr.data:
     d.vector[1] = d.vector[1] % 1.0
 
-mesh.update()```
+mesh.update()
+```
 
 
 
-Finally, go to File -> Export -> Model 3d (.m3d) and enable option ```Embed Assets```, it can be found on the right of the menu
+Finally, go to File -> Export -> Model 3d (.m3d) and enable option ``Embed Assets``, it can be found on the right of the menu
 Then, export to the place you want (preferably into models)
 
 If there are issues with the textures, try convert them into .png.
