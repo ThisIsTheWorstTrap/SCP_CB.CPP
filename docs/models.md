@@ -1,23 +1,24 @@
-### How to change a model from blitz3d to a .m3d model
+# How to change a model from blitz3d to a .m3d model
 
-# 1 : intall blender version 5
+## 1 : install blender version 5
 
 - On Windows : go to the official blender web site, and dowload the latest version
 - On Linux   : use ```sudo pacman -S blender```
 
-# 2 : download the required addons
+## 2 : download the required addons
 
 - The SCP_TOOLSET addon : go to https://github.com/General-101/SCP-CB-Toolset and download the latest release
-- The m3d blender exporter : go to https://gitlab.com/bztsrc/model3d/tree/master/blender and download ```io_scene_m3d.py```
+- The m3d blender exporter : go to https://gitlab.com/bztsrc/model3d/tree/master/blender and download ``io_scene_m3d.py``
 
-# 3 : install the addons
+## 3 : install the addons
 
 Go to Edit -> Preferences -> Add-ons -> Install from disk and then select your extensions
 
-# 4 : transform the model
+## 4 : transform the model
 
 First, you need to import the .b3d model : go to File -> Import.
 Then, you need to check if textures are found : go to Shading, and click on the model : some box should appear on the bottom
+
 Then, find the texture in these box : if the texture is a png, don't change it. Else, use GIMP to change the format to png
 Then, go to UV Editing : if the UV are correctly mapped on the texture, then you're good
 Else, you need to go to Scripting, then select the model and click new scrpit and write this python script : 
