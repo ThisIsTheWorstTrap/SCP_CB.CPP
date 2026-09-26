@@ -12,12 +12,14 @@ rooms.json format :
     "start":{
         "mesh":"models/map/173.m3d",
         "size":[20,20,30],
-        "event":"173guard",
     },
     "room3_lcz":{
         "mesh":"models/map/room3_lcz.m3d",
         "size"=[10,10,15],
-        "event"=null,
+    },
+    "room2tesla_lcz":{
+        "mesh":"models/map/room2tesla_lcz",
+        "size"=[10,10,15],
     },
 }
 ```
@@ -31,20 +33,14 @@ The format is the following :
 ```
 {
     "rooms":{
-        "start":{
-            "coordinates":[17,15],
-            "event":"173guard",
-            "active"=0,
+        "17,15":{
+            "room":"start",
         },
-        "room3_lcz":{
-            "coordinates":[16,15],
-            "event":null,
-            "active"=0,
+        "16,15":{
+            "room":"room3_lcz",
         },
-        "room3_sinkhole":{
-            "coordinates":[16,14],
-            "event"="106sinkhole",
-            "active"=1,
+        "16,14":{
+            "room":"room2tesla_lcz",
         },
     },
 }
