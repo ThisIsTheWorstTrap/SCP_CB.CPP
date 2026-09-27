@@ -30,6 +30,7 @@ class RaylibRenderer : public Renderer
         void add_model_scene(int model_id, Engine::Coordinates position) override;
 
         float get_model_height(int model_id) override;
+        float get_model_width(int model_id) override;
 
         void play_selected_animation(int model_id, int anim_num, int frame) override;
         std::string get_animations_name(int model_id) override;

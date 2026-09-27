@@ -108,6 +108,12 @@ float RaylibRenderer::get_model_height(int model_id)
     return bbox.max.y - bbox.min.y;
 }
 
+float RaylibRenderer::get_model_width(int model_id)
+{
+    BoundingBox bbox = ::GetModelBoundingBox(models[model_id]);
+    return bbox.max.x - bbox.min.x;
+}
+
 void RaylibRenderer::play_selected_animation(int model_id, int anim_num, int frame)
 {
     int model_anim_count = anims_count_from_model[model_id];

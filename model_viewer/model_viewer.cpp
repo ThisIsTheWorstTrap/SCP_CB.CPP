@@ -39,9 +39,9 @@ void ModelViewer::load_models(std::string models_folder_path)
     }
 }
 
-void ModelViewer::add_model(int model)
+void ModelViewer::add_model(int model, Engine::Coordinates pos = {0.0f, 0.0f, 0.0f})
 {
-    renderer->add_model_scene((int)model, Engine::Coordinates(0.0f, 0.0f, 0.0f));
+    renderer->add_model_scene((int)model, pos);
 }
 
 void ModelViewer::run_animation(int model_id, int anim_num, int frame)
@@ -72,26 +72,32 @@ void ModelViewer::run(std::string path)
     bool is_anim_active = true;
     int frame;
 
+    int mode = 1;
+
     while (!renderer->window_should_close())
     {
         float delta_time = renderer->get_delta_time();
 
-        std::string model_names = transform_vector_of_models(path);
-        if (GuiDropdownBox((Rectangle){ 100, 80, 500, 30 },
-                           model_names.c_str(),
-                           &drop_down_active, drop_down_edit_mode))
-        {
-            drop_down_edit_mode = !drop_down_edit_mode;
-            anim_drop_down_active = 0;
-            camera_fitted = !camera_fitted;
-        }
 
-        std::string anims_name = renderer->get_animations_name(drop_down_active);
-        if (GuiDropdownBox((Rectangle){ 1000, 80, 200, 30 },
-                           anims_name.c_str(),
-                           &anim_drop_down_active, anim_drop_down_edit_mode))
+        if (mode == 0)
         {
-            anim_drop_down_edit_mode = !anim_drop_down_edit_mode;
+            std::string model_names = transform_vector_of_models(path);
+            if (GuiDropdownBox((Rectangle){ 100, 80, 500, 30 },
+                            model_names.c_str(),
+                            &drop_down_active, drop_down_edit_mode))
+            {
+                drop_down_edit_mode = !drop_down_edit_mode;
+                anim_drop_down_active = 0;
+                camera_fitted = !camera_fitted;
+            }
+
+            std::string anims_name = renderer->get_animations_name(drop_down_active);
+            if (GuiDropdownBox((Rectangle){ 1000, 80, 200, 30 },
+                            anims_name.c_str(),
+                            &anim_drop_down_active, anim_drop_down_edit_mode))
+            {
+                anim_drop_down_edit_mode = !anim_drop_down_edit_mode;
+            }
         }
 
         if (input->is_mouse_button_down(Engine::MouseButton::Right))
@@ -171,11 +177,19 @@ void ModelViewer::run(std::string path)
 
         renderer->begin_frame();
         renderer->draw_grid();
-        add_model(drop_down_active);
-        if (is_anim_active && renderer->get_animations_num(drop_down_active) > 0)
+        if (mode == 0)
         {
-            frame += 1;
-            run_animation(drop_down_active, anim_drop_down_active, frame);
+            add_model(drop_down_active);
+            if (is_anim_active && renderer->get_animations_num(drop_down_active) > 0)
+            {
+                frame += 1;
+                run_animation(drop_down_active, anim_drop_down_active, frame);
+            }
+        }
+        else
+        {
+            add_model(0);
+            add_model(1, {0.0f, 0.0f, 1.0f});
         }
         renderer->end_frame();
     }

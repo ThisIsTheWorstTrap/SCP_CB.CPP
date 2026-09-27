@@ -30,6 +30,7 @@ class Renderer
         virtual void add_model_scene(int model_id, Engine::Coordinates position) = 0;
 
         virtual float get_model_height(int model_id) = 0;
+        virtual float get_model_width(int model_id) = 0;
 
         virtual void play_selected_animation(int model_id, int anim_num, int frame) = 0;
         virtual std::string get_animations_name(int model_id) = 0;
