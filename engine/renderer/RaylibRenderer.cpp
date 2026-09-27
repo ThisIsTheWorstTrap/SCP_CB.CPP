@@ -134,3 +134,8 @@ int RaylibRenderer::get_animations_num(int model_id)
 {
     return anims_count_from_model[model_id];
 }
+
+void RaylibRenderer::draw_grid()
+{
+    ::DrawGrid(20, 1);
+}

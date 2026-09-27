@@ -41,7 +41,7 @@ void ModelViewer::load_models(std::string models_folder_path)
 
 void ModelViewer::add_model(int model)
 {
-    renderer->add_model_scene((int)model, Engine::Coordinates(0, 0, 0));
+    renderer->add_model_scene((int)model, Engine::Coordinates(0.0f, 0.0f, 0.0f));
 }
 
 void ModelViewer::run_animation(int model_id, int anim_num, int frame)
@@ -51,11 +51,11 @@ void ModelViewer::run_animation(int model_id, int anim_num, int frame)
 
 void ModelViewer::run(std::string path)
 {
-    Engine::Coordinates camera_position(0.0f, 2.0f, 5.0f);
-    float yaw = 3.14159265f; // face -Z
+    Engine::Coordinates camera_position(0.0f, 0.0f, 0.0f);
+    float yaw = 0.0f; // face -Z
     float pitch = 0.0f;
 
-    const float move_speed = 10.0f;
+    const float move_speed = 1.0f;
     const float mouse_sensitivity = 0.003f;
 
     bool cursor_currently_hidden = true;
@@ -114,7 +114,7 @@ void ModelViewer::run(std::string path)
             if (pitch < -1.5f)
                 pitch = -1.5f;
         }
-
+        /*
         if (!camera_fitted)
         {
             float model_height =
@@ -146,7 +146,7 @@ void ModelViewer::run(std::string path)
 
                 camera_fitted = true;
             }
-        }
+        }*/
 
         Engine::Coordinates forward(
             cosf(pitch) * sinf(yaw),
@@ -170,6 +170,7 @@ void ModelViewer::run(std::string path)
         );
 
         renderer->begin_frame();
+        renderer->draw_grid();
         add_model(drop_down_active);
         if (is_anim_active && renderer->get_animations_num(drop_down_active) > 0)
         {

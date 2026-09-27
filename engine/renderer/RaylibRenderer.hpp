@@ -35,6 +35,8 @@ class RaylibRenderer : public Renderer
         std::string get_animations_name(int model_id) override;
         int get_animations_num(int model_id) override;
 
+        void draw_grid() override;
+
     private:
         Camera3D camera;
         std::unordered_map<int, Model> models;
