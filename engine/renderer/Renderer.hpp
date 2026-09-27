@@ -36,6 +36,8 @@ class Renderer
         virtual std::string get_animations_name(int model_id) = 0;
         virtual int get_animations_num(int model_id) = 0;
 
+        virtual bool check_overlaping(int model_id1, int model_id2) = 0;
+
         virtual void draw_grid() = 0;
 };
 

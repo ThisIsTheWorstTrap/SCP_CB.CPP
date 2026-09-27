@@ -9,6 +9,7 @@ namespace Engine
     class Coordinates
     {
         public:
+            // The x and z axis are the horizontal axis, and the y axis is the vertical axis
             Coordinates(float x=0.0f, float y=0.0f, float z=0.0f): x(x), y(y), z(z) {};
 
             float get_x() const;

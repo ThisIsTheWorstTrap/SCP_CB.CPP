@@ -141,6 +141,12 @@ int RaylibRenderer::get_animations_num(int model_id)
     return anims_count_from_model[model_id];
 }
 
+bool RaylibRenderer::check_overlaping(int model_id1, int model_id2)
+{
+    // TODO
+    //return ::CheckCollisionBoxes(::GetModelBoundingBox(models[model_id1]), ::GetModelBoundingBox(models[model_id2]));
+}
+
 void RaylibRenderer::draw_grid()
 {
     ::DrawGrid(20, 1);

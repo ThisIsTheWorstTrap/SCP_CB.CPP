@@ -72,7 +72,7 @@ void ModelViewer::run(std::string path)
     bool is_anim_active = true;
     int frame;
 
-    int mode = 1;
+    int mode = 1; // debug
 
     while (!renderer->window_should_close())
     {
@@ -189,7 +189,7 @@ void ModelViewer::run(std::string path)
         else
         {
             add_model(0);
-            add_model(1, {0.0f, 0.0f, 1.0f});
+            add_model(1, {0.0f, 0.0f, 5.0f});
         }
         renderer->end_frame();
     }
