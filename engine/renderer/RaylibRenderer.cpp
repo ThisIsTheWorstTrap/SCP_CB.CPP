@@ -8,6 +8,7 @@ RaylibRenderer::RaylibRenderer() : camera{}
 void RaylibRenderer::init_window(int width, int height, const char* title)
 {
     SetConfigFlags(FLAG_MSAA_4X_HINT);
+    SetTraceLogLevel(LOG_WARNING);
     InitWindow(width, height, title);
     SetTargetFPS(60); // Temporary
 

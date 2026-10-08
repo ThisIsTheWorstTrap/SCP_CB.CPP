@@ -188,8 +188,10 @@ void ModelViewer::run(std::string path)
         }
         else
         {
-            add_model(0);
-            add_model(1, {0.0f, 0.0f, 5.0f});
+            for (int i=0; i < 112;i++)
+            {
+                add_model(i, {0.0f, 0.0f, 2.0f*i});
+            }
         }
         renderer->end_frame();
     }
