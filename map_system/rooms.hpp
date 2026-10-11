@@ -5,10 +5,10 @@
 
 typedef enum
 {
-    NORTH,
-    WEST,
-    SOUTH,
-    EAST,
+    NORTH=0,
+    WEST=90,
+    SOUTH=180,
+    EAST=270,
 } RoomsCardinal;
 
 class Room

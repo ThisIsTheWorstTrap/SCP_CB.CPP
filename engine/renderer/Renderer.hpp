@@ -27,7 +27,7 @@ class Renderer
         virtual std::vector<std::string> get_models_from_folder(std::string folder) = 0;
 
         virtual void load_model_anims(const char* path, int id, int* anim_count) = 0;
-        virtual void add_model_scene(int model_id, Engine::Coordinates position) = 0;
+        virtual void add_model_scene(int model_id, Engine::Coordinates position, float angle) = 0;
 
         virtual float get_model_height(int model_id) = 0;
         virtual float get_model_width(int model_id) = 0;

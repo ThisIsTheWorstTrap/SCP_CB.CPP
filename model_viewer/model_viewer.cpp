@@ -41,7 +41,7 @@ void ModelViewer::load_models(std::string models_folder_path)
 
 void ModelViewer::add_model(int model, Engine::Coordinates pos = {0.0f, 0.0f, 0.0f})
 {
-    renderer->add_model_scene((int)model, pos);
+    renderer->add_model_scene((int)model, pos, 180.0);
 }
 
 void ModelViewer::run_animation(int model_id, int anim_num, int frame)

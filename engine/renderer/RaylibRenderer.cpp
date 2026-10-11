@@ -96,11 +96,11 @@ void RaylibRenderer::load_model_anims(const char* path, int model_id, int* anim_
     anims_count_from_model[model_id] = *anim_count;
 }
 
-void RaylibRenderer::add_model_scene(int model_id, Engine::Coordinates position)
+void RaylibRenderer::add_model_scene(int model_id, Engine::Coordinates position, float angle)
 {
     Model& model = models[model_id];
     Vector3 pos = { position.get_x(), position.get_y(), position.get_z() };
-    ::DrawModel(model, pos, 1.0f, WHITE);
+    ::DrawModelEx(model, pos, {0.0f, 1.0f, 0.0f}, angle, {1.0f, 1.0f, 1.0f}, WHITE);
 }
 
 float RaylibRenderer::get_model_height(int model_id)

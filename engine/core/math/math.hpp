@@ -3,6 +3,8 @@
 
 #include <cmath>
 
+#define PI 3.141592f
+
 namespace Engine
 {
 

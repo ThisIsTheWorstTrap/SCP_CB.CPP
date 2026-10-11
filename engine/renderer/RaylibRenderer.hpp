@@ -27,7 +27,7 @@ class RaylibRenderer : public Renderer
         std::vector<std::string> get_models_from_folder(std::string folder) override;
 
         void load_model_anims(const char* path, int id, int* anim_count) override;
-        void add_model_scene(int model_id, Engine::Coordinates position) override;
+        void add_model_scene(int model_id, Engine::Coordinates position, float angle) override;
 
         float get_model_height(int model_id) override;
         float get_model_width(int model_id) override;
