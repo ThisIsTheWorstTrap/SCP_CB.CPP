@@ -5,7 +5,7 @@ Engine::Coordinates Room::get_pos() const
     return position;
 }
 
-float Room::get_angle() const
+RoomsCardinal Room::get_angle() const
 {
     return angle;
 }

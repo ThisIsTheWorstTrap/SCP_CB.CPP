@@ -14,16 +14,16 @@ typedef enum
 class Room
 {
     public:
-        Room(Engine::Coordinates position, float angle): position(position), angle(angle) {};
+        Room(Engine::Coordinates position, RoomsCardinal angle): position(position), angle(angle) {};
         Engine::Coordinates get_pos() const;
-        float get_angle() const;
+        RoomsCardinal get_angle() const;
         Engine::Coordinates get_size() const;
 
         bool check_overlaping(Room& other) const;
 
     private:
         Engine::Coordinates position;
-        float angle;
+        RoomsCardinal angle;
 
         Engine::Coordinates size;
 

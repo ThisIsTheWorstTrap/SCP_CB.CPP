@@ -26,25 +26,25 @@ class RaylibRenderer : public Renderer
 
         std::vector<std::string> get_models_from_folder(std::string folder) override;
 
-        void load_model_anims(const char* path, int id, int* anim_count) override;
-        void add_model_scene(int model_id, Engine::Coordinates position, float angle) override;
+        void load_model_anims(const char* path, std::string id, int* anim_count) override;
+        void add_model_scene(std::string model_id, Engine::Coordinates position, float angle) override;
 
-        float get_model_height(int model_id) override;
-        float get_model_width(int model_id) override;
+        float get_model_height(std::string model_id) override;
+        float get_model_width(std::string model_id) override;
 
-        void play_selected_animation(int model_id, int anim_num, int frame) override;
-        std::string get_animations_name(int model_id) override;
-        int get_animations_num(int model_id) override;
+        void play_selected_animation(std::string model_id, int anim_num, int frame) override;
+        std::string get_animations_name(std::string model_id) override;
+        int get_animations_num(std::string model_id) override;
 
-        bool check_overlaping(int model_id1, int model_id2) override;
+        bool check_overlaping(std::string model_id1, std::string model_id2) override;
 
         void draw_grid() override;
 
     private:
         Camera3D camera;
-        std::unordered_map<int, Model> models;
-        std::unordered_map<int, ModelAnimation*> model_animations;
-        std::unordered_map<int, int> anims_count_from_model;
+        std::unordered_map<std::string, Model> models;
+        std::unordered_map<std::string, ModelAnimation*> model_animations;
+        std::unordered_map<std::string, int> anims_count_from_model;
 };
 
 #endif

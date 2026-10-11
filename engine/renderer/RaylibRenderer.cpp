@@ -21,9 +21,9 @@ void RaylibRenderer::init_window(int width, int height, const char* title)
 
 void RaylibRenderer::close_window()
 {
-    for (const auto& [num, animations]: model_animations)
+    for (const auto& [name, animations]: model_animations)
     {
-        ::UnloadModelAnimations(animations, anims_count_from_model[num]);
+        ::UnloadModelAnimations(animations, anims_count_from_model[name]);
     }
     for (const auto& [model_id, model]: models)
     {
@@ -80,7 +80,7 @@ std::vector<std::string> RaylibRenderer::get_models_from_folder(std::string fold
     return files;
 }
 
-void RaylibRenderer::load_model_anims(const char* path, int model_id, int* anim_count)
+void RaylibRenderer::load_model_anims(const char* path, std::string model_id, int* anim_count)
 {
     Model model = ::LoadModel(path);
     models[model_id] = model;
@@ -96,26 +96,26 @@ void RaylibRenderer::load_model_anims(const char* path, int model_id, int* anim_
     anims_count_from_model[model_id] = *anim_count;
 }
 
-void RaylibRenderer::add_model_scene(int model_id, Engine::Coordinates position, float angle)
+void RaylibRenderer::add_model_scene(std::string model_id, Engine::Coordinates position, float angle)
 {
     Model& model = models[model_id];
     Vector3 pos = { position.get_x(), position.get_y(), position.get_z() };
     ::DrawModelEx(model, pos, {0.0f, 1.0f, 0.0f}, angle, {1.0f, 1.0f, 1.0f}, WHITE);
 }
 
-float RaylibRenderer::get_model_height(int model_id)
+float RaylibRenderer::get_model_height(std::string model_id)
 {
     BoundingBox bbox = ::GetModelBoundingBox(models[model_id]);
     return bbox.max.y - bbox.min.y;
 }
 
-float RaylibRenderer::get_model_width(int model_id)
+float RaylibRenderer::get_model_width(std::string model_id)
 {
     BoundingBox bbox = ::GetModelBoundingBox(models[model_id]);
     return bbox.max.x - bbox.min.x;
 }
 
-void RaylibRenderer::play_selected_animation(int model_id, int anim_num, int frame)
+void RaylibRenderer::play_selected_animation(std::string model_id, int anim_num, int frame)
 {
     int model_anim_count = anims_count_from_model[model_id];
     if (model_anim_count > 0 && model_anim_count > anim_num)
@@ -126,7 +126,7 @@ void RaylibRenderer::play_selected_animation(int model_id, int anim_num, int fra
         ::TraceLog(LOG_ERROR, "You're trying to play a model (%d) that has no animation", model_id);
 }
 
-std::string RaylibRenderer::get_animations_name(int model_id)
+std::string RaylibRenderer::get_animations_name(std::string model_id)
 {
     std::string result;
     for (int i = 0; i < anims_count_from_model[model_id]; i++)
@@ -137,12 +137,12 @@ std::string RaylibRenderer::get_animations_name(int model_id)
     return result;
 }
 
-int RaylibRenderer::get_animations_num(int model_id)
+int RaylibRenderer::get_animations_num(std::string model_id)
 {
     return anims_count_from_model[model_id];
 }
 
-bool RaylibRenderer::check_overlaping(int model_id1, int model_id2)
+bool RaylibRenderer::check_overlaping(std::string model_id1, std::string model_id2)
 {
     // TODO
     //return ::CheckCollisionBoxes(::GetModelBoundingBox(models[model_id1]), ::GetModelBoundingBox(models[model_id2]));

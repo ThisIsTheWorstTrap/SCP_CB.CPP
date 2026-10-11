@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <filesystem>
 
 #define RAYGUI_IMPLEMENTATION
 #include "lib/raygui.h"
@@ -33,18 +34,19 @@ void ModelViewer::load_models(std::string models_folder_path)
 
     for (long unsigned int i=0; i<files.size(); i++)
     {
-        std::string model_path = files[i];
+        const std::string model_path = files[i];
+        std::string model_name = std::filesystem::path(model_path).stem().string();
         int anim_num = 0;
-        renderer->load_model_anims(model_path.c_str(), i, &anim_num);
+        renderer->load_model_anims(model_path.c_str(), model_name, &anim_num);
     }
 }
 
-void ModelViewer::add_model(int model, Engine::Coordinates pos = {0.0f, 0.0f, 0.0f})
+void ModelViewer::add_model(std::string model, Engine::Coordinates pos, float angle)
 {
-    renderer->add_model_scene((int)model, pos, 180.0);
+    renderer->add_model_scene((std::string)model, pos, angle);
 }
 
-void ModelViewer::run_animation(int model_id, int anim_num, int frame)
+void ModelViewer::run_animation(std::string model_id, int anim_num, int frame)
 {
     renderer->play_selected_animation(model_id, anim_num, frame);
 }
@@ -60,7 +62,7 @@ void ModelViewer::run(std::string path)
 
     bool cursor_currently_hidden = true;
     input->switch_cursor();
-
+    /*
     bool camera_fitted = false;
 
     bool drop_down_edit_mode = false;
@@ -73,12 +75,12 @@ void ModelViewer::run(std::string path)
     int frame;
 
     int mode = 1; // debug
-
+    */
     while (!renderer->window_should_close())
     {
         float delta_time = renderer->get_delta_time();
 
-
+        /*
         if (mode == 0)
         {
             std::string model_names = transform_vector_of_models(path);
@@ -98,7 +100,7 @@ void ModelViewer::run(std::string path)
             {
                 anim_drop_down_edit_mode = !anim_drop_down_edit_mode;
             }
-        }
+        }*/
 
         if (input->is_mouse_button_down(Engine::MouseButton::Right))
         {
@@ -177,6 +179,7 @@ void ModelViewer::run(std::string path)
 
         renderer->begin_frame();
         renderer->draw_grid();
+        /*
         if (mode == 0)
         {
             add_model(drop_down_active);
@@ -187,12 +190,9 @@ void ModelViewer::run(std::string path)
             }
         }
         else
-        {
-            for (int i=0; i < 112;i++)
-            {
-                add_model(i, {0.0f, 0.0f, 12.8f*i});
-            }
-        }
+        {*/
+                add_model("008_opt", {0.0f, 0.0f, 0.0f}, 90.0f); // 12.8f
+        //}
         renderer->end_frame();
     }
 }

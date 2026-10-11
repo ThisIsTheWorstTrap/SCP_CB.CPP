@@ -12,8 +12,8 @@ class ModelViewer
         std::string transform_vector_of_models(std::string models_folder_path);
 
         void load_models(std::string path);
-        void add_model(int model, Engine::Coordinates pos);
-        void run_animation(int model_id, int anim_num, int frame);
+        void add_model(std::string model, Engine::Coordinates pos, float angle);
+        void run_animation(std::string model_id, int anim_num, int frame);
         
         void run(std::string path);
 
