@@ -191,7 +191,7 @@ void ModelViewer::run(std::string path)
         }
         else
         {*/
-                add_model("008_opt", {0.0f, 0.0f, 0.0f}, 90.0f); // 12.8f
+            add_model("008_opt", {0.0f, 0.0f, 0.0f}, 0.0f); // 12.8f
         //}
         renderer->end_frame();
     }
