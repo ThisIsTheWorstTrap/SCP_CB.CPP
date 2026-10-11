@@ -55,7 +55,7 @@ void ModelViewer::run(std::string path)
     float yaw = 0.0f; // face -Z
     float pitch = 0.0f;
 
-    const float move_speed = 1.0f;
+    const float move_speed = 10.0f;
     const float mouse_sensitivity = 0.003f;
 
     bool cursor_currently_hidden = true;
@@ -190,7 +190,7 @@ void ModelViewer::run(std::string path)
         {
             for (int i=0; i < 112;i++)
             {
-                add_model(i, {0.0f, 0.0f, 2.0f*i});
+                add_model(i, {0.0f, 0.0f, 12.8f*i});
             }
         }
         renderer->end_frame();
