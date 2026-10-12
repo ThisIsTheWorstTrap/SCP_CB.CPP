@@ -2,6 +2,23 @@
 A clone of the famous SCP Containment Breach game, but rewritten in C++ for better readability
 
 
+# Build
+
+```
+cmake -B build
+cmake --build build --config Release
+```
+
+# Rooms
+
+Copy the original `GFX` folder of scpcb at the root of the project, then run:
+
+```
+scp_remake GFX/map
+```
+
+See docs/gfx.md.
+
 # Licence
 The original game was created by Jonas "Regalis11" Rikkonen (https://github.com/regalis11/scpcb).
 
