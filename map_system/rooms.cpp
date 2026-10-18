@@ -27,5 +27,5 @@ bool Room::check_overlaping(Room& other) const
 
 std::unordered_map<std::string, Room> make_room_list(std::string path)
 {
-
+    
 }

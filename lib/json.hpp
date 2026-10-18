@@ -3760,4 +3760,18 @@ typedef json_internal_::jsonnode<char8_t, json_internal_::utf8tag> u8json;
 #endif
 
 }	//  namespace NAMESPACE_CTLJSON
+
+#include <sstream>
+#include <fstream>
+
+std::string read_file(const std::string path)
+{
+	std::ifstream file(path, std::ios::binary);
+	if (!file)
+		return "";
+	std::ostringstream ss;
+	ss << file.rdbuf();
+	return ss.str();
+}
+
 #endif	//  CTLJSON_HPP_
