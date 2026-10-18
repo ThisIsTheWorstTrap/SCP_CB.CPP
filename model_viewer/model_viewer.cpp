@@ -31,14 +31,19 @@ std::string ModelViewer::transform_vector_of_models(std::string models_folder_pa
 void ModelViewer::load_models(std::string models_folder_path)
 {
     std::vector<std::string> files = renderer->get_models_from_folder(models_folder_path);
-
+    const std::string model_path = files[0];
+    std::string model_name = std::filesystem::path(model_path).stem().string();
+    int anim_num = 0;
+    renderer->load_model_anims(model_path.c_str(), model_name, &anim_num);
+    std::cout << model_name << std::endl;
+    /*
     for (long unsigned int i=0; i<files.size(); i++)
     {
         const std::string model_path = files[i];
         std::string model_name = std::filesystem::path(model_path).stem().string();
         int anim_num = 0;
         renderer->load_model_anims(model_path.c_str(), model_name, &anim_num);
-    }
+    }*/
 }
 
 void ModelViewer::add_model(std::string model, Engine::Coordinates pos, float angle)
@@ -191,7 +196,7 @@ void ModelViewer::run(std::string path)
         }
         else
         {*/
-            add_model("008_opt", {0.0f, 0.0f, 0.0f}, 0.0f); // 12.8f
+            add_model("173", {0.0f, 0.0f, 0.0f}, 0.0f); // 12.8f
         //}
         renderer->end_frame();
     }
