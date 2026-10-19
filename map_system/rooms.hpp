@@ -46,6 +46,6 @@ class Room
         int walksound;
 };
 
-std::unordered_map<std::string, Room> make_room_list(std::string path);
+std::unordered_map<std::string, Room> make_room_list(const std::string& path);
 
 #endif

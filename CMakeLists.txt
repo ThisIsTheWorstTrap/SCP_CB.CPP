@@ -11,6 +11,8 @@ find_package(raylib REQUIRED)
 add_executable(${PROJECT_NAME}
     main.cpp
     model_viewer/model_viewer.cpp
+    map_system/map.cpp
+    map_system/rooms.cpp
     engine/core/math/math.cpp
     engine/renderer/Renderer.cpp
     engine/renderer/RaylibRenderer.cpp

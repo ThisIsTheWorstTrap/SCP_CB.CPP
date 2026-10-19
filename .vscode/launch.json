@@ -9,7 +9,7 @@
         "type": "cppdbg",
         "request": "launch",
         "program": "${workspaceFolder}/build/scp_remake",
-        "args": ["${workspaceFolder}/models/"],
+        "args": ["${workspaceFolder}/models/", "${workspaceFolder}/data/rooms.json"],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",
         "environment": [],
